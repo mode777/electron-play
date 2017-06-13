@@ -1,0 +1,37 @@
+{
+  "name": "electron-play",
+  "version": "1.0.0",
+  "description": "A game browser/launcher",
+  "main": "bin/main.js",
+  "scripts": {
+    "start": "tsc && electron ."
+  },
+  "repository": "https://github.com/mode777/electron-play.git",
+  "keywords": [
+    "Electron",
+    "Games"
+  ],
+  "author": "Alexander Klingenbeck",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^7.0.13",
+    "@types/sql.js": "0.0.28"
+  },
+  "dependencies": {
+    "@angular/animations": "^4.0.2",
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/material": "^2.0.0-beta.6",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/router": "^4.0.0",
+    "core-js": "^2.4.1",
+    "electron": "~1.6.2",
+    "rxjs": "^5.1.0",
+    "sql.js": "^0.4.0",
+    "zone.js": "^0.8.4"
+  }
+}

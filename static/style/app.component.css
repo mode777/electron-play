@@ -1,0 +1,18 @@
+.header {
+    position: fixed;
+    z-index: 9999;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+}
+
+.content {
+    background-color: #eee;
+    padding-top: 70px;
+}
+
+.icon {
+  padding: 0 14px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
