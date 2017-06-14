@@ -16,12 +16,32 @@ export class DbConnection {
 
     public get database() { return this._db; }
 
-    public async queryAsync<TResult>(query: string): Promise<TResult[]> {
+    public async queryAsync<TResult>(query: string, ...params: any[]): Promise<TResult[]> {
         return new Promise<TResult[]>((resolve, reject) => {
-            this._db.all(query, (err, rows) => {
+            this._db.all(query, params, (err, rows) => {
                 err ? reject(err) : resolve(rows);
             });
         });
+    }
+
+    public async findAsync<TResult>(query: string, ...params: any[]): Promise<TResult> {
+        return new Promise<TResult>((resolve, reject) => {
+            this._db.all(query, params, (err, rows) => {
+                err ? reject(err) : resolve(rows[0] || null);
+            });
+        });
+    }
+
+    public async executeAsync(query: string, ...params: any[]): Promise<{}> {
+        return new Promise((resolve, reject) => {
+            this._db.all(query, params, (err, rows) => {
+                err ? reject(err) : resolve(rows);
+            });
+        });
+    }
+
+    public insertAsync(table: string, obj: Object){
+        
     }
 
     // public query<TResult>(query: string, ...param: DbValue[]): TResult[] {

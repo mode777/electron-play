@@ -5,7 +5,8 @@
   "main": "bin/main.js",
   "scripts": {
     "start": "tsc && electron .",
-    "postinstall": "install-app-deps"
+    "postinstall": "install-app-deps",
+    "rebuild": "electron-rebuild -f -w sqlite3"
   },
   "repository": "https://github.com/mode777/electron-play.git",
   "keywords": [
