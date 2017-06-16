@@ -9,14 +9,19 @@ export interface Platform {
 
 @Component({
     selector: 'app-root',
-    templateUrl: '../static/templates/app.component.html',
-    styleUrls: ['../static/style/app.component.css']
+    template: `
+
+    <rp-header title="RetroPlay"></rp-header>
+    <rp-platform *ngFor="let platform of platforms" [model]="platform"></rp-platform>
+    
+    `, 
+    styles: [`
+    `]
 })
 export class AppComponent implements OnInit {
 
     private readonly _connection: DbConnection;
 
-    title = 'RetroPlay';
     platforms: Platform[] = [];
 
     constructor(){

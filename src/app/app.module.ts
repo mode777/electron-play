@@ -3,15 +3,21 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdIconModule, MdButtonModule, MdCheckboxModule, MdToolbarModule, MdCardModule, MdListModule } from '@angular/material';
+import { MdIconModule, MdButtonModule, MdCheckboxModule, MdToolbarModule, MdCardModule, MdListModule, MdInputModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { PlatformComponent } from "./platform/platform.component";
+import { TitleComponent } from "./header/header.component";
+import { PlatformDisplayComponent } from "./platform/platform-display.component";
+import { PlatformEditComponent } from "./platform/platform-edit.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    PlatformComponent
+    PlatformComponent,
+    PlatformDisplayComponent,
+    PlatformEditComponent,
+    TitleComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +29,8 @@ import { PlatformComponent } from "./platform/platform.component";
     MdToolbarModule,
     MdCardModule,
     MdListModule,
-    MdIconModule
+    MdIconModule,
+    MdInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
