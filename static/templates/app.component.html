@@ -5,8 +5,5 @@
   <md-icon class="icon">settings</md-icon>
 </md-toolbar>
 <div class="content">
-    <md-card *ngFor="let platform of platforms" style="margin: 10px;">
-        <md-card-title>{{ platform.name }}</md-card-title>
-        <md-card-subtitle>{{ platform.id }}</md-card-subtitle>
-    </md-card>
+    <platform *ngFor="let platform of platforms" [model]="platform"></platform>
 </div>

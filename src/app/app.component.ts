@@ -25,11 +25,17 @@ export class AppComponent implements OnInit {
     }
 
     async ngOnInit() {
-        this.platforms = await this._connection.queryAsync<Platform>("select * from platforms");
+        const conn = this._connection;
 
-        // setTimeout(() => {
-        // }, 100);
-        
+        await conn.runTransactionAsync(async () => {
+            await conn.executeAsync("delete from platforms");
+            await conn.insertAsync("platforms", { name: "My Platform", description: "A home console released by Nintendo in 1989" });
+            const myId = await conn.getLastIdAsync();
+            await conn.insertAsync("platforms", { name: "Sega Megadrive", description: "A home console released by SEGA in 1988" });
+            await conn.updateByKeysAsync("platforms", { name: "Super Nintendo" }, { id: myId });
+        });
+                
+        this.platforms = await conn.queryAsync<Platform>("select * from platforms");        
     }
 
 

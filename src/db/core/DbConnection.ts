@@ -16,7 +16,7 @@ export class DbConnection {
 
     public get database() { return this._db; }
 
-    public async queryAsync<TResult>(query: string, ...params: any[]): Promise<TResult[]> {
+    public async queryAsync<TResult extends any>(query: string, ...params: any[]): Promise<TResult[]> {
         return new Promise<TResult[]>((resolve, reject) => {
             this._db.all(query, params, (err, rows) => {
                 err ? reject(err) : resolve(rows);
@@ -24,61 +24,85 @@ export class DbConnection {
         });
     }
 
-    public async findAsync<TResult>(query: string, ...params: any[]): Promise<TResult> {
+    public async getAsync<TResult extends any>(query: string, ...params: any[]): Promise<TResult> {
         return new Promise<TResult>((resolve, reject) => {
-            this._db.all(query, params, (err, rows) => {
-                err ? reject(err) : resolve(rows[0] || null);
+            this._db.get(query, params, (err, row) => {
+                err ? reject(err) : resolve(row);
             });
         });
     }
 
-    public async executeAsync(query: string, ...params: any[]): Promise<{}> {
-        return new Promise((resolve, reject) => {
-            this._db.all(query, params, (err, rows) => {
-                err ? reject(err) : resolve(rows);
+    public getByKeysAsync<TResult extends any>(table: string, keysObject: {[key:string]: any}){
+        const whereColumns = Object.keys(keysObject);
+        const whereValues = whereColumns.map(x => keysObject[x]);
+        const whereClause = whereColumns.map(x => `${x} = ?`).join(", ");
+
+        return this.getByWhereAsync<TResult>(table, whereClause, whereValues);
+    }
+
+    public getByWhereAsync<TResult extends any>(table: string, whereClause: string, whereClauseArgs = []){
+        const query = `SELECT * FROM ${table} WHERE ${whereClause}`;
+        return this.getAsync<TResult>(query, ...whereClauseArgs);
+    }
+
+    public queryByWhereAsync<TResult extends any>(table: string, whereClause: string, whereClauseArgs = []){
+        const query = `SELECT * FROM ${table} WHERE ${whereClause}`;
+        return this.queryAsync<TResult>(query, ...whereClauseArgs);
+    }
+
+    public async getScalarAsync(query: string, ...params: any[]): Promise<number> {
+        const res = await this.getAsync(query, params);
+        if(!res)
+            return null;
+
+        return <number>res[Object.keys(res)[0]];
+    }
+
+    public async executeAsync(query: string, ...params: any[]): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            this._db.run(query, params, (err) => {
+                err ? reject(err) : resolve();
             });
         });
     }
 
-    public insertAsync(table: string, obj: Object){
-        
+    public insertAsync(table: string, valuesObject: {[key:string]: any}){
+        const columns = Object.keys(valuesObject);
+        const values = columns.map(x => valuesObject[x]);
+        const params = columns.map(x => "?");
+
+        const query = `INSERT INTO ${table} (${columns.join(", ")}) VALUES (${params.join(",")})`;
+
+        return this.executeAsync(query, ...values);
     }
 
-    // public query<TResult>(query: string, ...param: DbValue[]): TResult[] {
-    //     let stm: Statement;
-    //     const results: TResult[] = [];
+    public updateByKeysAsync(table: string, valuesObject: {[key:string]: any}, keysObject: {[key:string]: any}){
+        const whereColumns = Object.keys(keysObject);
+        const whereValues = whereColumns.map(x => keysObject[x]);
+        const whereClause = whereColumns.map(x => `${x} = ?`).join(", ");
 
-    //     try {
-    //         stm = this._db.prepare(query);
-    //         this._assertBind(stm.bind(param));
-    //         while(stm.step()){
-    //             results.push(<TResult><any>stm.getAsObject())
-    //         }
-    //     }
-    //     finally {
-    //         if(stm){
-    //             stm.free();
-    //         }
-    //     }
+        return this.updateByWhereAsync(table, valuesObject, whereClause, whereValues);
+    }
 
-    //     return results;
-    // }
+    public updateByWhereAsync(table: string, valuesObject: {[key:string]: any}, whereClause: string, whereClauseArgs = []){
+        const columns = Object.keys(valuesObject);
+        const values = columns.map(x => valuesObject[x]);
+        const setStatement = columns.map(x => `${x} = ?`).join(", ");
+        const args = values.concat(whereClauseArgs);
 
-    // public queryStatement<TResult>(statement: Statement, ...param: DbValue[]){
-    //     const results: TResult[] = [];
+        const query = `UPDATE ${table} SET ${setStatement} WHERE ${whereClause}`;
 
-    //     this._assertBind(statement.bind(param));
-    //     while(statement.step()){
-    //         results.push(<TResult><any>statement.getAsObject())
-    //     }  
+        return this.executeAsync(query, ...args);
+    }
 
-    //     return results;
-    // }
+    public async runTransactionAsync(executor: () => Promise<void>){
+        await this.executeAsync("BEGIN TRANSACTION");
+        await executor();
+        await this.executeAsync("END");
+    }
 
-    // private _assertBind(res: boolean){
-    //     if(!res)
-    //         throw new Error("Parameters could not be bound. Invalid number of arguments?");
-    // }
-
+    public getLastIdAsync() : Promise<number> {
+        return this.getScalarAsync("SELECT last_insert_rowid() as id");
+    } 
     
 }
