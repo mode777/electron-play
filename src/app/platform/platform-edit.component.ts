@@ -17,7 +17,6 @@ import { PlatformModel, Platform } from "./platform.model";
             <button md-button (click)="cancel()"><md-icon class="icon">cancel</md-icon></button>
         </md-card-actions>
     </md-card>
-
     `
 })
 export class PlatformEditComponent {

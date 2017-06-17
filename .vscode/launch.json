@@ -13,6 +13,7 @@
         "runtimeArgs": [
             "--enable-logging"
         ],
+        "timeout": 30000,
         "env": {},
         "sourceMaps": true,
         "outFiles": [

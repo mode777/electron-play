@@ -10,6 +10,7 @@ import { PlatformComponent } from "./platform/platform.component";
 import { TitleComponent } from "./header/header.component";
 import { PlatformDisplayComponent } from "./platform/platform-display.component";
 import { PlatformEditComponent } from "./platform/platform-edit.component";
+import { PlatformListComponent } from "./platform/platform-list.component";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PlatformEditComponent } from "./platform/platform-edit.component";
     PlatformComponent,
     PlatformDisplayComponent,
     PlatformEditComponent,
+    PlatformListComponent,
     TitleComponent
   ],
   imports: [
