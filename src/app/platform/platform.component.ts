@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as fs from 'fs';
-import { PlatformModel, Platform } from "./platform.model";
+import { PlatformModel, PlatformEntity } from "./platform.model";
 
 @Component({
     selector: 'rp-platform',
@@ -19,7 +19,7 @@ import { PlatformModel, Platform } from "./platform.model";
 export class PlatformComponent {
 
     @Input() edit: boolean = false;
-    @Input() model: Platform;   
+    @Input() model: PlatformEntity;   
     @Output() destroy = new EventEmitter<void>();
 
 

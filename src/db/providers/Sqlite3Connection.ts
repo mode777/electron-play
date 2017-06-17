@@ -1,20 +1,15 @@
-import * as fs from "fs";
 import {verbose, Database} from "sqlite3";
+import { DbConnection } from "../DbConnection";
 
 verbose();
 
-export type DbValue = string | number | Uint8Array
-//export type DbObject = {[key: string]: DbValue};
-
-export class DbConnection {
+export class Sqlite3Connection implements DbConnection {
 
     private readonly _db: Database;
 
     constructor(path){
         this._db = new Database(path);
     }
-
-    public get database() { return this._db; }
 
     public async queryAsync<TResult extends any>(query: string, ...params: any[]): Promise<TResult[]> {
         return new Promise<TResult[]>((resolve, reject) => {
@@ -32,7 +27,7 @@ export class DbConnection {
         });
     }
 
-    public getByKeysAsync<TResult extends any>(table: string, keysObject: {[key:string]: any}){
+    public getByKeysAsync<TResult extends any>(table: string, keysObject: any){
         const whereColumns = Object.keys(keysObject);
         const whereValues = whereColumns.map(x => keysObject[x]);
         const whereClause = whereColumns.map(x => `${x} = ?`).join(", ");
@@ -66,7 +61,7 @@ export class DbConnection {
         });
     }
 
-    public insertAsync(table: string, valuesObject: {[key:string]: any}){
+    public insertAsync(table: string, valuesObject: any){
         const columns = Object.keys(valuesObject);
         const values = columns.map(x => valuesObject[x]);
         const params = columns.map(x => "?");
@@ -76,7 +71,7 @@ export class DbConnection {
         return this.executeAsync(query, ...values);
     }
 
-    public updateByKeysAsync(table: string, valuesObject: {[key:string]: any}, keysObject: {[key:string]: any}){
+    public updateByKeysAsync(table: string, valuesObject: any, keysObject: any){
         const whereColumns = Object.keys(keysObject);
         const whereValues = whereColumns.map(x => keysObject[x]);
         const whereClause = whereColumns.map(x => `${x} = ?`).join(", ");
@@ -84,7 +79,7 @@ export class DbConnection {
         return this.updateByWhereAsync(table, valuesObject, whereClause, whereValues);
     }
 
-    public updateByWhereAsync(table: string, valuesObject: {[key:string]: any}, whereClause: string, whereClauseArgs = []){
+    public updateByWhereAsync(table: string, valuesObject: any, whereClause: string, whereClauseArgs = []){
         const columns = Object.keys(valuesObject);
         const values = columns.map(x => valuesObject[x]);
         const setStatement = columns.map(x => `${x} = ?`).join(", ");
@@ -104,5 +99,26 @@ export class DbConnection {
     public getLastIdAsync() : Promise<number> {
         return this.getScalarAsync("SELECT last_insert_rowid() as id");
     } 
+    
+    public deleteByKeysAsync(table: string, keysObject: any): Promise<void> {
+        const whereColumns = Object.keys(keysObject);
+        const whereValues = whereColumns.map(x => keysObject[x]);
+        const whereClause = whereColumns.map(x => `${x} = ?`).join(", ");
+
+        return this.deleteByWhereAsync(table, whereClause, whereValues);
+    }
+    
+    public deleteByWhereAsync(table: string, whereClause: string, whereClauseArgs: any[]): Promise<void> {
+        const query = `DELETE ${table} WHERE ${whereClause}`;
+        return this.executeAsync(query, ...whereClauseArgs);
+    }
+
+    public closeAsync() {
+        return new Promise<void>((resolve, reject)=> {
+            this._db.close((err)=> {
+                err ? reject(err) : resolve();
+            });
+        });
+    }
     
 }

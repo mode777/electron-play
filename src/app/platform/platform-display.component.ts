@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as fs from 'fs';
-import { PlatformModel, Platform } from "./platform.model";
+import { PlatformModel, PlatformEntity } from "./platform.model";
 
 
 @Component({
@@ -21,7 +21,7 @@ import { PlatformModel, Platform } from "./platform.model";
 export class PlatformDisplayComponent {
 
     @Input() 
-    model: Platform;
+    model: PlatformEntity;
     @Output() 
     edit = new EventEmitter<void>();
     @Output() 

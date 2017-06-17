@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as fs from 'fs';
-import { PlatformModel, Platform } from "./platform.model";
+import { PlatformModel, PlatformEntity } from "./platform.model";
 
 @Component({
     selector: 'rp-platform-edit',
@@ -22,7 +22,7 @@ import { PlatformModel, Platform } from "./platform.model";
 export class PlatformEditComponent {
 
     @Input() 
-    model: Platform;
+    model: PlatformEntity;
     @Output() 
     finish = new EventEmitter<void>();
 

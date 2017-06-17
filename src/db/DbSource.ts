@@ -1,52 +1,22 @@
-import { SourceItem, Source, SourceChangeEvent } from "../data/interfaces";
+import { BaseSource, Model } from "../data";
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from "rxjs/Observable";
-import { EventEmitter } from "@angular/core";
+import { DbModel } from "./DbModel";
+import { DbConnection } from "./DbConnection";
+import { DbBaseModel } from "./DbBaseModel";
 
-export abstract class DbSource<TItem extends SourceItem> implements Source<TItem> {
-    
-    private readonly _items: Observable<TItem[]>;
-    private readonly _changed = new EventEmitter<SourceChangeEvent<TItem>>();
-    private _dataItems: TItem[];
-    
-    constructor(){
-        this._items = this.changed.asObservable().map(async x => {
-            switch (x.type) {
-                case "sync":
-                    this._dataItems = await this.loadAsync();
-                    break;
-                case "delete":
-                    x.items.forEach(x => this.remove(x));
-                    break;
-                case "update":
-                case "add":
-                default:
-                    break;
-            }
-            return this._dataItems;
-        }).switchMap(x => x);
-        this.changed.emit({
-            type: "sync",
-            items: []
-        })
+
+
+export abstract class DbSource<T extends DbModel> extends BaseSource<T> {
+
+    constructor(protected connection: DbConnection, protected readonly table: string){
+        super();
     }
 
-    get items() { return this._items; }
-    get changed() { return this._changed; }
-    
-    public add(item: TItem){
-        const newItem = this.create();
-        this._dataItems.push(newItem);
-        this._changed.emit({
-            type: "add",
-            items: [newItem]
-        });
+    protected deleteItemAsync(item: T): Promise<void> {
+        return this.connection.deleteByKeysAsync(this.table, item.getKeys());
     }
 
-    protected abstract loadAsync() : Promise<TItem[]>;
-    protected abstract create(): TItem;
-
-    protected remove(item: TItem){
-
-    }
-
+    protected abstract loadDataAsync(): Promise<T[]>;
+    protected abstract createModelAsync(): Promise<T>;
 }
