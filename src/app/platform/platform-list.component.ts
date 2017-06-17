@@ -9,7 +9,13 @@ export interface Platform {
 @Component({
     selector: 'rp-platform-list',
     template: `
-    <rp-platform *ngFor="let platform of platforms" [model]="platform" (destroy)="destroy(platform)"></rp-platform>
+    <!--<rp-platform *ngFor="let platform of platforms" [model]="platform" (destroy)="destroy(platform)"></rp-platform>-->
+    <rp-list [items]="platforms">
+        <rp-list-item *ngFor="let platform of platforms">
+            <md-card-title>{{platform.name}}</md-card-title>
+            <md-card-subtitle>{{platform.description}}</md-card-subtitle>
+        </rp-list-item>
+    </rp-list>
     `, 
     styles: [`
     `]

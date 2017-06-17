@@ -5,10 +5,10 @@ import { PlatformModel, Platform } from "./platform.model";
 @Component({
     selector: 'rp-platform',
     template: `
+    <rp-platform-edit *ngIf="edit; else elseBlock" [model]="model" (finish)="edit = !edit"></rp-platform-edit>
     <ng-template #elseBlock>
         <rp-platform-display [model]="model" (edit)="edit = !edit" (destroy)="destroy.emit()"></rp-platform-display>
     </ng-template>
-    <rp-platform-edit *ngIf="edit; else elseBlock" [model]="model" (finish)="edit = !edit"></rp-platform-edit>
     `,
     styles: [`
     rp-platform-display, rp-platform-edit {
