@@ -12,7 +12,12 @@ import { Observable } from "rxjs/Observable";
                 <md-card-content>{{platform.id}}</md-card-content>
             </model-view>
             <model-edit>
-                <md-card-title> {{platform.name}}</md-card-title>
+                <md-input-container>
+                    <input mdInput placeholder="Name" [(value)]="platform.name">
+                </md-input-container>
+                <md-input-container>
+                    <input mdInput placeholder="Descriptions" [(value)]="platform.description">
+                </md-input-container>
             </model-edit>
         </model-item>
     `,

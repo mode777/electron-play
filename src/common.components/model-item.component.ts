@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Source, Model } from "../common";
 
 @Component({
@@ -30,6 +30,10 @@ export class ModelItemComponent {
     @Input() model: Model;
     @Input() editMode: boolean = false;
 
+    constructor(){
+
+    }
+
     destroy(){
         this.source.removeAsync(this.model);
     }
@@ -43,7 +47,8 @@ export class ModelItemComponent {
         this.editMode = false;
     }
 
-    cancel() {
+    async cancelAsync() {
+        await this.model.cancelAsync();
         this.editMode = false;
     }
 }

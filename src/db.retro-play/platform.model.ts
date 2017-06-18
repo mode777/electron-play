@@ -21,6 +21,7 @@ export class PlatformModel extends IdentityModel<PlatformEntity> {
     }
 
     protected getEntity(): PlatformEntity {
+        console.log(this);
         return {
             id: this.id,
             name: this.name,
