@@ -30,7 +30,7 @@ export class Sqlite3Connection implements DbConnection {
     public getByKeysAsync<TResult extends any>(table: string, keysObject: any){
         const whereColumns = Object.keys(keysObject);
         const whereValues = whereColumns.map(x => keysObject[x]);
-        const whereClause = whereColumns.map(x => `${x} = ?`).join(", ");
+        const whereClause = whereColumns.map(x => `${x} = ?`).join(" AND ");
 
         return this.getByWhereAsync<TResult>(table, whereClause, whereValues);
     }
@@ -74,7 +74,7 @@ export class Sqlite3Connection implements DbConnection {
     public updateByKeysAsync(table: string, valuesObject: any, keysObject: any){
         const whereColumns = Object.keys(keysObject);
         const whereValues = whereColumns.map(x => keysObject[x]);
-        const whereClause = whereColumns.map(x => `${x} = ?`).join(", ");
+        const whereClause = whereColumns.map(x => `${x} = ?`).join(" AND ");
 
         return this.updateByWhereAsync(table, valuesObject, whereClause, whereValues);
     }
@@ -103,7 +103,7 @@ export class Sqlite3Connection implements DbConnection {
     public deleteByKeysAsync(table: string, keysObject: any): Promise<void> {
         const whereColumns = Object.keys(keysObject);
         const whereValues = whereColumns.map(x => keysObject[x]);
-        const whereClause = whereColumns.map(x => `${x} = ?`).join(", ");
+        const whereClause = whereColumns.map(x => `${x} = ?`).join(" AND ");
 
         return this.deleteByWhereAsync(table, whereClause, whereValues);
     }
