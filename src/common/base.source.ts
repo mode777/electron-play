@@ -1,7 +1,7 @@
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from "rxjs/Observable";
-import { Model } from "./Model";
-import { Source } from "./Source";
+import { Model } from "./model";
+import { Source } from "./source";
 
 export abstract class BaseSource<T extends Model> implements Source<T> {
 
@@ -30,8 +30,10 @@ export abstract class BaseSource<T extends Model> implements Source<T> {
     }
     
     observe(): Observable<T[]> {
-        this._initialized = true;
-        this.syncAsync();
+        if(!this._initialized){
+            this.syncAsync();
+            this._initialized = true;
+        }
         return this._subject;
     }
 

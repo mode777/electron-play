@@ -1,26 +1,28 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import * as fs from 'fs';
-import { PlatformModel, PlatformEntity } from "./platform.model";
+import { PlatformSource, PlatformModel } from "../../db.retro-play";
+import { Observable } from "rxjs/Observable";
 
 @Component({
     selector: 'rp-platform',
     template: `
-    <rp-platform-edit *ngIf="edit; else elseBlock" [model]="model" (finish)="edit = !edit"></rp-platform-edit>
-    <ng-template #elseBlock>
-        <rp-platform-display [model]="model" (edit)="edit = !edit" (destroy)="destroy.emit()"></rp-platform-display>
-    </ng-template>
+        <model-item class="rp-card" *ngFor="let platform of platforms | async" [source]="source" [model]="platform">
+            <model-view>
+                <md-card-title> {{platform.name}}</md-card-title>
+                <md-card-subtitle>{{platform.description}}</md-card-subtitle>
+                <md-card-content>{{platform.id}}</md-card-content>
+            </model-view>
+            <model-edit>
+                <md-card-title> {{platform.name}}</md-card-title>
+            </model-edit>
+        </model-item>
     `,
-    styles: [`
-    rp-platform-display, rp-platform-edit {
-        margin: 15px;
-    }
-    `]
+    styles: []
 })
 export class PlatformComponent {
 
-    @Input() edit: boolean = false;
-    @Input() model: PlatformEntity;   
-    @Output() destroy = new EventEmitter<void>();
+    platforms: Observable<PlatformModel[]>;
 
-
+    constructor(public source: PlatformSource){
+        this.platforms = source.observe();
+    }
 }

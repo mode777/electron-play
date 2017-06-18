@@ -1,5 +1,5 @@
-import { IdentityModel } from "../../db/IdentityModel";
-import { DbConnection } from "../../db/DbConnection";
+
+import { IdentityModel, DbConnection } from "../db";
 
 export interface PlatformEntity {
     id: number;
@@ -9,11 +9,15 @@ export interface PlatformEntity {
 
 export class PlatformModel extends IdentityModel<PlatformEntity> {
 
-    public name = "";
-    public description = null;
+    public name: string;
+    public description: string;
 
     constructor(connection: DbConnection, platform?: PlatformEntity){
-        super("platforms", connection, platform)
+        super("platforms", connection, platform);
+        if(!platform){
+            this.name = "";
+            this.description = null;
+        }
     }
 
     protected getEntity(): PlatformEntity {
@@ -26,7 +30,7 @@ export class PlatformModel extends IdentityModel<PlatformEntity> {
 
     protected loadAdditionalValues(entity: PlatformEntity) {
         this.name = entity.name;
-        this.description = entity.description;
+        this.description = entity.description || null;
     }
     
 }

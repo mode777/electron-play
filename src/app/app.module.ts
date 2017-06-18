@@ -5,33 +5,31 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialModule } from "../material/material.module";
+import { CommonComponentsModule } from "../common.components";
+import { RetroPlayConnection, PlatformSource } from "../db.retro-play";
 
 import { AppComponent } from './app.component';
 import { PlatformComponent } from "./platform/platform.component";
 import { TitleComponent } from "./header/header.component";
-import { PlatformDisplayComponent } from "./platform/platform-display.component";
-import { PlatformEditComponent } from "./platform/platform-edit.component";
-import { PlatformListComponent } from "./platform/platform-list.component";
-import { ListModule } from "../rp-list/list.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PlatformComponent,
-    PlatformDisplayComponent,
-    PlatformEditComponent,
-    PlatformListComponent,
-    TitleComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    ListModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+    declarations: [
+        AppComponent,
+        PlatformComponent,
+        TitleComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        CommonComponentsModule
+    ],
+    providers: [
+        RetroPlayConnection,
+        PlatformSource
+    ],
+    bootstrap: [AppComponent]
+    })
 export class AppModule { }

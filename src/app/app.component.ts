@@ -5,7 +5,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
     template: `
 
     <rp-header title="{{title}}"></rp-header>
-    <rp-platform-list></rp-platform-list>
+    <rp-platform></rp-platform>
     
     `, 
     styles: [`

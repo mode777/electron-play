@@ -1,11 +1,8 @@
-import { BaseSource, Model } from "../data";
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from "rxjs/Observable";
-import { DbModel } from "./DbModel";
-import { DbConnection } from "./DbConnection";
-import { DbBaseModel } from "./DbBaseModel";
-
-
+import { BaseSource } from "../../common";
+import { DbModel } from "./db.model";
+import { DbConnection } from "./db.connection";
 
 export abstract class DbSource<T extends DbModel> extends BaseSource<T> {
 

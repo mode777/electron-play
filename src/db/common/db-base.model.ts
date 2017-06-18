@@ -1,16 +1,17 @@
-import { Model } from "../data";
-import { DbConnection } from "./DbConnection";
-import { DbModel } from "./DbModel";
+import { Model } from "../../common";
+import { DbModel } from "./db.model";
+import { DbConnection } from "./db.connection";
+
 
 export abstract class DbBaseModel<TEntity extends {}> implements DbModel {
 
     constructor(protected readonly table: string, protected readonly connection: DbConnection, entity?: TEntity){
-        if(entity)
+        if(entity){
             this.loadFromEntity(entity);
+        }
     }
     
     async saveAsync(){
-
         if(!this.exists()){
             return this.createAsync();
         }

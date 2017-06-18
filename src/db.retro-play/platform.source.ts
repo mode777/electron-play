@@ -1,10 +1,12 @@
-import { DbSource } from "../../db/DbSource";
+import { Injectable } from "@angular/core";
+import { DbSource, DbConnection } from "../db";
 import { PlatformModel, PlatformEntity } from "./platform.model";
-import { DbConnection } from "../../db/DbConnection";
+import { RetroPlayConnection } from "./retro-play.connection";
 
+@Injectable()
 export class PlatformSource extends DbSource<PlatformModel> {
 
-    constructor(connection: DbConnection){
+    constructor(connection: RetroPlayConnection){
         super(connection, "platforms");
     }
 

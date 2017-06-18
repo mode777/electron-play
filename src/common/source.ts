@@ -1,4 +1,4 @@
-import { Model } from "./Model";
+import { Model } from "./model";
 import { Observable } from "rxjs/Observable";
 
 export interface Source<T extends Model> {

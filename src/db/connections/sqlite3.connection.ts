@@ -1,5 +1,5 @@
 import {verbose, Database} from "sqlite3";
-import { DbConnection } from "../DbConnection";
+import { DbConnection } from "../common";
 
 verbose();
 
