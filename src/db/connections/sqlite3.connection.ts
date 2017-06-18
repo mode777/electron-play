@@ -109,7 +109,7 @@ export class Sqlite3Connection implements DbConnection {
     }
     
     public deleteByWhereAsync(table: string, whereClause: string, whereClauseArgs: any[]): Promise<void> {
-        const query = `DELETE ${table} WHERE ${whereClause}`;
+        const query = `DELETE FROM ${table} WHERE ${whereClause}`;
         return this.executeAsync(query, ...whereClauseArgs);
     }
 
