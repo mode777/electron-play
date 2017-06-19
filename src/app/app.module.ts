@@ -11,6 +11,8 @@ import { RetroPlayConnection, PlatformSource } from "../db.retro-play";
 import { AppComponent } from './app.component';
 import { PlatformComponent } from "./platform/platform.component";
 import { TitleComponent } from "./header/header.component";
+import { TvInputService } from "../tv";
+import { TvComponentsModule } from "../tv-components";
 
 @NgModule({
     declarations: [
@@ -24,11 +26,13 @@ import { TitleComponent } from "./header/header.component";
         HttpModule,
         BrowserAnimationsModule,
         MaterialModule,
-        CommonComponentsModule
+        CommonComponentsModule,
+        TvComponentsModule
     ],
     providers: [
         RetroPlayConnection,
-        PlatformSource
+        PlatformSource,
+        TvInputService
     ],
     bootstrap: [AppComponent]
     })
