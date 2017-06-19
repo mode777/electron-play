@@ -9,8 +9,8 @@ export abstract class BaseSource<T extends Model> implements Source<T> {
     private readonly _subject = new ReplaySubject<T[]>(1);
     private _initialized = false;
 
-    async addAsync(item: T): Promise<void> {
-        const model = await this.createModelAsync();  
+    async addAsync(item?: T): Promise<void> {
+        const model = item || (await this.createModelAsync());  
         this._data.push(model);
         this._subject.next(this._data); 
     }

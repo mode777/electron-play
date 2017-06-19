@@ -18,6 +18,7 @@ import { Observable } from "rxjs/Observable";
                 <md-input-container color="accent">
                     <input mdInput placeholder="Descriptions" [(ngModel)]="platform.description">
                 </md-input-container>
+                <button md-raised-button (click)="addLocation(platform)">Add location</button>
             </model-edit>
         </model-item>
     `,
@@ -29,5 +30,9 @@ export class PlatformComponent {
 
     constructor(public source: PlatformSource){
         this.platforms = source.observe();
+    }
+
+    async addLocation(platform: PlatformModel){
+        await platform.locations.addAsync();
     }
 }
