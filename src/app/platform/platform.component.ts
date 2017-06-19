@@ -12,11 +12,11 @@ import { Observable } from "rxjs/Observable";
                 <md-card-content>{{platform.id}}</md-card-content>
             </model-view>
             <model-edit>
-                <md-input-container>
-                    <input mdInput placeholder="Name" [(value)]="platform.name">
+                <md-input-container color="accent">
+                    <input mdInput placeholder="Name" [(ngModel)]="platform.name">
                 </md-input-container>
-                <md-input-container>
-                    <input mdInput placeholder="Descriptions" [(value)]="platform.description">
+                <md-input-container color="accent">
+                    <input mdInput placeholder="Descriptions" [(ngModel)]="platform.description">
                 </md-input-container>
             </model-edit>
         </model-item>

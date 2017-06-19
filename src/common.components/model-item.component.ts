@@ -47,7 +47,7 @@ export class ModelItemComponent {
         this.editMode = false;
     }
 
-    async cancelAsync() {
+    async cancel() {
         await this.model.cancelAsync();
         this.editMode = false;
     }
