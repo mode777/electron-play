@@ -1,4 +1,4 @@
-import { Component, OnInit, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ContentChildren, QueryList, AfterContentInit, Input } from '@angular/core';
 import { TvRowItemComponent } from "./tv-row-item.component";
 import { TvInputService, NavigationComponent } from "../tv";
 import { Observable } from "rxjs/Observable";
@@ -8,26 +8,42 @@ import 'rxjs/add/observable/interval';
 @Component({
     selector: 'tv-row',
     template: `
-        <div class="tv-row">
-            <ng-content></ng-content>
+        <div class="tv-row-wrapper">
+            <div *ngIf="!!title" class="tv-row-heading">{{title}}</div>
+            <div class="tv-row" [style.margin-left]="offset+'px'">
+                <ng-content></ng-content>
+            </div>
         </div>
     `,
     styles: [`
+        .tv-row-wrapper {
+            overflow: hidden;
+        }
         .tv-row {
-            margin: 40px;
-            position: relative;            
+            padding: 10px;
+            position: relative;  
+            white-space: nowrap;
+            transition: margin 100ms;          
+        }
+        .tv-row-heading {
+            margin-top: 50px;
+            margin-left: 50px;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 20px;
+            color: white;
         }
     `]
 })
-
 export class TvRowComponent extends NavigationComponent implements AfterContentInit {
 
     @ContentChildren(TvRowItemComponent) items: QueryList<TvRowItemComponent>;
+    @Input() title: string = null;
 
     private _itemsTotal = 0;
     private _selectedIndex = -1;
     private _focused = true;
     private _contentLoaded = false;
+    private offset = 0;
 
     constructor(private _input: TvInputService) {
         super();
@@ -83,6 +99,7 @@ export class TvRowComponent extends NavigationComponent implements AfterContentI
 
     protected moveBack(){
         if(this._selectedIndex !== -1 && this._selectedIndex > 0){
+            this.offset += this.items.toArray()[this._selectedIndex].width;
             this._selectedIndex--;
             this.focusItem();
         }
@@ -91,10 +108,10 @@ export class TvRowComponent extends NavigationComponent implements AfterContentI
     protected moveForward(){
         if(this._selectedIndex !== -1 && this._selectedIndex < this._itemsTotal-1){
             this._selectedIndex++;
+            this.offset -= this.items.toArray()[this._selectedIndex].width;
             this.focusItem();
         }
     }
-
 
     focus() {
         this._focused = true;

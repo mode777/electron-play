@@ -10,8 +10,28 @@ import 'rxjs/add/observable/interval';
         <tv-input></tv-input>
         <rp-header title="{{title}}"></rp-header>
         <!--<rp-platform></rp-platform>-->
-        <tv-row>
+        <tv-row title="Recommended">
+            <tv-row-item></tv-row-item>
+            <tv-row-item></tv-row-item>
+            <tv-row-item [width]="200"></tv-row-item>
             <tv-row-item [selected]="true"></tv-row-item>
+            <tv-row-item></tv-row-item>
+            <tv-row-item [width]="200"></tv-row-item>
+            <tv-row-item></tv-row-item>
+            <tv-row-item [width]="75"></tv-row-item>
+            <tv-row-item></tv-row-item>
+            <tv-row-item></tv-row-item>
+        </tv-row>
+        <tv-row title="Recent">
+            <tv-row-item></tv-row-item>
+            <tv-row-item></tv-row-item>
+            <tv-row-item></tv-row-item>
+            <tv-row-item></tv-row-item>
+            <tv-row-item></tv-row-item>
+            <tv-row-item></tv-row-item>
+        </tv-row>
+        <tv-row>
+            <tv-row-item></tv-row-item>
             <tv-row-item></tv-row-item>
             <tv-row-item></tv-row-item>
             <tv-row-item></tv-row-item>
