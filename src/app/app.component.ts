@@ -18,7 +18,7 @@ import { PlatformSource, PlatformModel } from "../db.retro-play";
                     {{platform.name}}
                 </tv-row-item>
             </tv-row>
-            <tv-row title="Last played" [height]="50">
+            <tv-row title="Last played">
                 <tv-row-item></tv-row-item>
                 <tv-row-item></tv-row-item>
                 <tv-row-item></tv-row-item>

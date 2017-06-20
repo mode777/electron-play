@@ -23,7 +23,6 @@ export abstract class ListComponent<T extends NavigationComponent> extends Navig
     get itemsTotal() { return this._itemsTotal; }
     get items() { return this._items; }
     get selectedIndex() { return this._selectedIndex; }
-    get height() { return 200; }
     get hasFocus() { return this._focused; }
         
     public selectIndex(){

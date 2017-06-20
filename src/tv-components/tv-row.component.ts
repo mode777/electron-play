@@ -34,7 +34,7 @@ import { ListComponent } from "./list.component";
             vertical-align: top;         
         }
         .tv-row-heading {
-            margin-top: 50px;
+            margin-top: 0px;
             margin-left: 50px;
             font-family: 'Roboto Condensed', sans-serif;
             font-size: 20px;
@@ -47,7 +47,7 @@ export class TvRowComponent extends ListComponent<TvRowItemComponent> implements
     @ContentChildren(TvRowItemComponent) query: QueryList<TvRowItemComponent>;
     @Input() title: string = null;
     @Input() selected = false;
-    @Input() height = 302;
+    @Input() height = 250;
 
     private _offset = 50;
     

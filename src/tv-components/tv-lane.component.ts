@@ -27,6 +27,7 @@ import { TvRowComponent } from "./tv-row.component";
             overflow: hidden;
         }
         .tv-lane {
+            padding-top: 30px;
             position: relative;  
             transition: margin 150ms; 
         }
