@@ -11,13 +11,21 @@ import { PlatformSource, PlatformModel } from "../db.retro-play";
         <tv-input></tv-input>
         <rp-header title="{{title}}"></rp-header>
         <!--<rp-platform></rp-platform>-->
-        <tv-row title="Recommended">
-            <tv-row-item [selected]="true"></tv-row-item>
-            <tv-row-item *ngFor="let platform of platforms | async">
-                {{platform.name}}
-            </tv-row-item>
-
-        </tv-row>
+        <tv-lane>
+            <tv-row title="Recommended" [selected]="true">
+                <tv-row-item [selected]="true"></tv-row-item>
+                <tv-row-item *ngFor="let platform of platforms | async">
+                    {{platform.name}}
+                </tv-row-item>
+            </tv-row>
+            <tv-row title="Last played">
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+            </tv-row>
+        </tv-lane>
         
     `, 
     styles: [`

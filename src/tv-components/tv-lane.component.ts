@@ -5,35 +5,33 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/throttle';
 import 'rxjs/add/observable/interval';
 import { ListComponent } from "./list.component";
+import { TvRowComponent } from "./tv-row.component";
 
 @Component({
-    selector: 'tv-row',
+    selector: 'tv-lane',
     template: `
-        <div class="tv-row-wrapper" [ngClass]="{ 'selected': hasFocus }">
-            <div *ngIf="!!title" class="tv-row-heading">{{title}}</div>
-            <div class="tv-row" [style.margin-left]="_offset+'px'">
+        <div class="tv-lane-wrapper">
+            <!--<div *ngIf="!!title" class="tv-lane-heading">{{title}}</div>-->
+            <div class="tv-lane" [style.margin-top]="_offset+'px'">
                 <ng-content></ng-content>
             </div>
         </div>
     `,
     styles: [`
-        .tv-row-wrapper {
+        .tv-lane-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             overflow: hidden;
-            opacity: .5;
-            transition: opacity 150ms ease-out; 
         }
-        .tv-row-wrapper.selected {
-            opacity: 1;
-            transition: opacity 150ms ease-in; 
-        }
-        .tv-row {
+        .tv-lane {
             padding: 10px;
             position: relative;  
-            white-space: nowrap;
             transition: margin 150ms; 
-            vertical-align: top;         
         }
-        .tv-row-heading {
+        .tv-lane-heading {
             margin-top: 50px;
             margin-left: 50px;
             font-family: 'Roboto Condensed', sans-serif;
@@ -42,12 +40,11 @@ import { ListComponent } from "./list.component";
         }
     `]
 })
-export class TvRowComponent extends ListComponent<TvRowItemComponent> implements AfterContentInit {
+export class TvLaneComponent extends ListComponent<TvRowComponent> implements AfterContentInit {
 
-    @ContentChildren(TvRowItemComponent) query: QueryList<TvRowItemComponent>;
+    @ContentChildren(TvRowComponent) query: QueryList<TvRowComponent>;
     @Input() title: string = null;
-    @Input() selected = false;
-    
+
     private _offset = 50;
     
     constructor(private _input: TvInputService) {
@@ -61,12 +58,12 @@ export class TvRowComponent extends ListComponent<TvRowItemComponent> implements
     }
 
     private _initInput(){
-        this._input.right
+        this._input.down
             .throttle(ev => Observable.interval(150)).forEach(ev => this.moveForward());
-        this._input.left
+        this._input.up
             .throttle(ev => Observable.interval(150)).forEach(ev => this.moveBack());
 
-        this.movedForward.forEach(() => this._offset -= this.items[this.selectedIndex].width)
-        this.movedBack.forEach(() => this._offset += this.items[this.selectedIndex+1].width);
+        this.movedForward.forEach(() => this._offset -= this.items[this.selectedIndex].height)
+        this.movedBack.forEach(() => this._offset += this.items[this.selectedIndex+1].height);
     }
 }

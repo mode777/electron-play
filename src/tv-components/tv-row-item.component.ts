@@ -14,7 +14,7 @@ import { NavigationComponent } from "../tv/index";
             background-color: #ddd;
             display: inline-block;
             border-radius: 0px;
-            transform: scale(1) translate(0,0);
+            transform: scale(1);
             z-index: initial;
             transition: transform 50ms ease-out;
             vertical-align: top;
