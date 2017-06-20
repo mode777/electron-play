@@ -22,9 +22,9 @@ import { NavigationComponent } from "../tv/index";
 
         .tv-row-item.selected {
             background-color: #eee;
-            transform: scale(1.1);
+            transform: scale(1.2);
             z-index: 99;
-            box-shadow: 0 5px 3px 0px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+            box-shadow: 0 5px 12px 4px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
             transition: transform 150ms ease-in-out;
         }
     `]

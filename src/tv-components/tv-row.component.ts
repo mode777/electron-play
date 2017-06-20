@@ -27,7 +27,7 @@ import { ListComponent } from "./list.component";
             transition: opacity 150ms ease-in; 
         }
         .tv-row {
-            padding: 10px;
+            padding: 20px;
             position: relative;  
             white-space: nowrap;
             transition: margin 150ms; 

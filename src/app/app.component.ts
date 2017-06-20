@@ -25,6 +25,20 @@ import { PlatformSource, PlatformModel } from "../db.retro-play";
                 <tv-row-item></tv-row-item>
                 <tv-row-item></tv-row-item>
             </tv-row>
+             <tv-row title="By platformd">
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+            </tv-row>
+            <tv-row title="By Genre">
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+                <tv-row-item></tv-row-item>
+            </tv-row>
         </tv-lane>
         
     `, 
