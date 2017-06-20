@@ -56,7 +56,6 @@ export abstract class ListComponent<T extends NavigationComponent> extends Navig
     }
 
     protected moveForward(){
-        console.log(this.items);
         if(this.hasFocus &&  this._selectedIndex !== -1 && this._selectedIndex < this._itemsTotal-1){
             this._selectedIndex++;
             this.focusItem();
@@ -100,10 +99,7 @@ export abstract class ListComponent<T extends NavigationComponent> extends Navig
 
         if(this._focused){
             this.focusItem();
-        }
-
-        console.log(this._itemsTotal, this._selectedIndex)
-        
+        }        
     }
 
 }

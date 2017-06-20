@@ -1,4 +1,4 @@
-import { Component, OnInit, ContentChildren, QueryList, AfterContentInit, Input } from '@angular/core';
+import { Component, OnInit, ContentChildren, QueryList, AfterContentInit, Input, ElementRef } from '@angular/core';
 import { TvRowItemComponent } from "./tv-row-item.component";
 import { TvInputService, NavigationComponent } from "../tv";
 import { Observable } from "rxjs/Observable";
@@ -25,10 +25,8 @@ import { TvRowComponent } from "./tv-row.component";
             right: 0;
             bottom: 0;
             overflow: hidden;
-            padding: 0;
         }
         .tv-lane {
-            padding: 10px;
             position: relative;  
             transition: margin 150ms; 
         }

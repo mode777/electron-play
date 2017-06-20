@@ -1,4 +1,4 @@
-import { Component, OnInit, ContentChildren, QueryList, AfterContentInit, Input } from '@angular/core';
+import { Component, OnInit, ContentChildren, QueryList, AfterContentInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { TvRowItemComponent } from "./tv-row-item.component";
 import { TvInputService, NavigationComponent } from "../tv";
 import { Observable } from "rxjs/Observable";
@@ -9,7 +9,7 @@ import { ListComponent } from "./list.component";
 @Component({
     selector: 'tv-row',
     template: `
-        <div class="tv-row-wrapper" [ngClass]="{ 'selected': hasFocus }">
+        <div class="tv-row-wrapper" [ngClass]="{ 'selected': hasFocus }" [style.height]="height+'px'">
             <div *ngIf="!!title" class="tv-row-heading">{{title}}</div>
             <div class="tv-row" [style.margin-left]="_offset+'px'">
                 <ng-content></ng-content>
@@ -47,12 +47,15 @@ export class TvRowComponent extends ListComponent<TvRowItemComponent> implements
     @ContentChildren(TvRowItemComponent) query: QueryList<TvRowItemComponent>;
     @Input() title: string = null;
     @Input() selected = false;
-    
+    @Input() height = 302;
+
     private _offset = 50;
     
-    constructor(private _input: TvInputService) {
+    constructor(private _input: TvInputService, private _el: ElementRef) {
         super();
+
      }
+
 
     ngAfterContentInit(): void {
         this.updateItems(this.query.toArray());        
