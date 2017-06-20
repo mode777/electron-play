@@ -17,6 +17,7 @@ import { NavigationComponent } from "../tv/index";
             transform: scale(1) translate(0,0);
             z-index: initial;
             transition: transform 50ms ease-out;
+            vertical-align: top;
         }
 
         .tv-row-item.selected {
@@ -24,7 +25,7 @@ import { NavigationComponent } from "../tv/index";
             transform: scale(1.1);
             z-index: 99;
             box-shadow: 0 5px 3px 0px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-            transition: transform 100ms ease-in;
+            transition: transform 150ms ease-in-out;
         }
     `]
 })

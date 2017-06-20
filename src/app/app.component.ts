@@ -3,6 +3,7 @@ import { TvInputService } from "../tv";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/throttle';
 import 'rxjs/add/observable/interval';
+import { PlatformSource, PlatformModel } from "../db.retro-play";
 
 @Component({
     selector: 'app-root',
@@ -11,41 +12,28 @@ import 'rxjs/add/observable/interval';
         <rp-header title="{{title}}"></rp-header>
         <!--<rp-platform></rp-platform>-->
         <tv-row title="Recommended">
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item [width]="200"></tv-row-item>
             <tv-row-item [selected]="true"></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item [width]="200"></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item [width]="75"></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
+            <tv-row-item *ngFor="let platform of platforms | async">
+                {{platform.name}}
+            </tv-row-item>
+
         </tv-row>
-        <tv-row title="Recent">
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-        </tv-row>
-        <tv-row>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-            <tv-row-item></tv-row-item>
-        </tv-row>
+        
     `, 
     styles: [`
     `]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = "RetroPlay";
+    platforms: Observable<PlatformModel[]>
 
-    constructor(private _input: TvInputService){
-        this._input.up.throttle(ev => Observable.interval(200)).forEach(x => console.log("up"));
+    constructor(public source: PlatformSource){
+        this.platforms = source.observe();
+    }
+
+    ngOnInit(): void {
+        setTimeout(() => {
+            this.source.addByNameAsync("My Platform", "My platform desc");
+        }, 2000);
     }
 }

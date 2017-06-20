@@ -21,4 +21,13 @@ export class PlatformSource extends DbSource<PlatformModel> {
         return model;
     }
 
+    public addByNameAsync(name: string, description?: string){
+        const platform = new PlatformModel(this.connection, {
+            id: 0,
+            name: name,
+            description: description
+        });
+        return this.addAsync(platform)
+    }
+
 }

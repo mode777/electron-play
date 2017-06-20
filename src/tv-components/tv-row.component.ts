@@ -23,7 +23,8 @@ import 'rxjs/add/observable/interval';
             padding: 10px;
             position: relative;  
             white-space: nowrap;
-            transition: margin 100ms;          
+            transition: margin 100ms; 
+            vertical-align: top;         
         }
         .tv-row-heading {
             margin-top: 50px;
@@ -43,19 +44,31 @@ export class TvRowComponent extends NavigationComponent implements AfterContentI
     private _selectedIndex = -1;
     private _focused = true;
     private _contentLoaded = false;
-    private offset = 0;
+    private offset = 50;
 
     constructor(private _input: TvInputService) {
         super();
      }
 
     ngAfterContentInit(): void {
-        this._initSelection();     
         this._initInput();
+        // select initial item.
+        this.items.forEach((item, i) => {
+            if(this._selectedIndex !== -1)
+                item.selected = false;
+            else if(item.selected)
+                this._selectedIndex = i;
+        });
+
+        this._contentLoaded = true;
+        this.items.changes.forEach(x => this._onItemsChanged());
+    }
+
+    private _onItemsChanged(){
+        this._initSelection();
         if(this._focused){
             this.focusItem();
         }
-        this._contentLoaded = true;
     }
 
     public selectIndex(){
@@ -76,13 +89,10 @@ export class TvRowComponent extends NavigationComponent implements AfterContentI
 
     private _initSelection(){
         this._itemsTotal = this.items.length;
-        this._selectedIndex = -1;
-        this.items.forEach((item, i) => {
-            if(this._selectedIndex !== -1)
-                item.selected = false;
-            else if(item.selected)
-                this._selectedIndex = i;
-        });
+        console.log(this._itemsTotal)
+
+        if(this._selectedIndex >= this._itemsTotal)
+            this._selectedIndex = this._itemsTotal -1;        
     }
 
     protected focusItem(){
