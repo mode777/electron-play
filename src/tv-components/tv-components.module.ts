@@ -7,6 +7,10 @@ import { TvInputComponent } from "./tv-input.component";
 import { TvRowComponent } from "./tv-row.component";
 import { TvRowItemComponent } from "./tv-row-item.component";
 import { TvLaneComponent } from "./tv-lane.component";
+import { TvScreenService } from "./tv-screen.service";
+import { TvScreenComponent } from "./tv-screen.component";
+
+export * from "./tv-screen.service";
 
 @NgModule({
     imports: [
@@ -17,16 +21,19 @@ import { TvLaneComponent } from "./tv-lane.component";
         TvInputComponent,
         TvRowComponent,
         TvRowItemComponent,
-        TvLaneComponent
+        TvLaneComponent,
+        TvScreenComponent
     ],
     declarations: [
         TvInputComponent,
         TvRowComponent,
         TvRowItemComponent,
-        TvLaneComponent
+        TvLaneComponent,
+        TvScreenComponent
     ],
     providers: [
-        TvInputService
+        TvInputService,
+        TvScreenService
     ],
 })
 export class TvComponentsModule { }

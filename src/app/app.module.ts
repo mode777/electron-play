@@ -13,6 +13,7 @@ import { PlatformComponent } from "./platform/platform.component";
 import { TitleComponent } from "./header/header.component";
 import { TvInputService } from "../tv";
 import { TvComponentsModule } from "../tv-components";
+import { TvScreenComponent } from "../tv-components/tv-screen.component";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { TvComponentsModule } from "../tv-components";
     providers: [
         RetroPlayConnection,
         PlatformSource,
-        TvInputService
+        TvInputService,
+        TvScreenComponent
     ],
     bootstrap: [AppComponent]
     })
