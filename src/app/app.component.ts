@@ -10,42 +10,46 @@ import { TvScreenService } from "../tv-components";
     selector: 'app-root',
     template: `
         <tv-input></tv-input>
-        <tv-screen></tv-screen>
+        <tv-screen>
+            <tv-panel></tv-panel>
+            <!--
+            <tv-lane>
+                <tv-row title="Recommended" [selected]="true">
+                    <tv-row-item [selected]="true"></tv-row-item>
+                    <tv-row-item *ngFor="let platform of platforms | async">
+                        {{platform.name}}
+                    </tv-row-item>
+                </tv-row>
+                <tv-row title="Last played">
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                </tv-row>
+                <tv-row title="By platformd">
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                </tv-row>
+                <tv-row title="By Genre">
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                    <tv-row-item></tv-row-item>
+                </tv-row>
+            </tv-lane>       
+            --> 
+        </tv-screen>
         
         <!--<rp-header title="{{title}}"></rp-header>
         <rp-platform></rp-platform>-->
 
-        <!--
-        <tv-lane>
-            <tv-row title="Recommended" [selected]="true">
-                <tv-row-item [selected]="true"></tv-row-item>
-                <tv-row-item *ngFor="let platform of platforms | async">
-                    {{platform.name}}
-                </tv-row-item>
-            </tv-row>
-            <tv-row title="Last played">
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-            </tv-row>
-             <tv-row title="By platformd">
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-            </tv-row>
-            <tv-row title="By Genre">
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-                <tv-row-item></tv-row-item>
-            </tv-row>
-        </tv-lane>
-        -->
+        
+
     `, 
     styles: [`
     `]
@@ -59,10 +63,11 @@ export class AppComponent implements AfterContentInit {
     }
 
     ngAfterContentInit(): void {
-        this._service.changeImage("./srcA.jpg");
-        setTimeout(() => {
-            this._service.changeImage("./srcB.jpg");
-            this.source.addByNameAsync("My Platform", "My platform desc");
-        }, 2000);
+        const images = ["./srcA.jpg","./srcB.jpg"]
+        let idx = 0;
+        this._service.changeImage(images[idx++]);
+        setInterval(() => {
+            this._service.changeImage(images[idx++ % images.length]);
+        }, 5000)
     }
 }

@@ -4,20 +4,29 @@ import { TvScreenService } from "./tv-screen.service";
 @Component({
     selector: 'tv-screen',
     template: `
-        <div class="max screen">
-            <div *ngIf="_srcB" class="max fill">
+        <div class="max">
+            <div *ngIf="_srcB" class="max fill" [style.background-color]="backgroundColor">
                 <img [src]="_srcB"/>
             </div>
-            <div *ngIf="_srcA" class="abc max fill" [ngClass]="{ active: _active }" >
-                <img [src]="_srcA"/>
+            <div *ngIf="_srcA" class="imgA max fill" [@active]="state">
+                <img [src]="_srcA" (load)="imageLoaded()"/>
             </div>
-            <div class="max overlay" [style.opacity]="opacity"></div>
+            <div class="max overlay" [style.opacity]="opacity" [style.background-color]="overlayColor"></div>
+            <ng-content></ng-content>
         </div>
     `,
-    styles: [`    
-        .screen {
-            background-color: white;
-        }        
+    animations: [
+        trigger('active', [
+            state('inactive', style({
+                opacity: 0.0
+            })),
+            state('active',   style({
+                opacity: 1.0
+            })),
+            transition('inactive => active', animate('500ms ease-in'))
+        ])
+    ],
+    styles: [`       
         .max {
             position: absolute;
             top: 0;
@@ -27,14 +36,6 @@ import { TvScreenService } from "./tv-screen.service";
         }
         .overlay {
             background-color: black;
-        }
-        .abc {
-            color: black;
-            opacity: 0.0;
-        }
-        .active {
-            opacity: 1;
-            transition: opacity 500ms ease-out;
         }
         .fill {
             display: flex;
@@ -52,18 +53,22 @@ import { TvScreenService } from "./tv-screen.service";
 
 export class TvScreenComponent {
     @Input() opacity: number = 0.5;
-    private _active = false;
+    @Input() overlayColor = "black";
+    @Input() backgroundColor: "#003";
+    //private _active = false;
     private _srcA = null;
     private _srcB = null;
+    state = "inactive;"
     
     constructor(private _service: TvScreenService) {
         this._service.imageChanged.forEach(src => {
-            this._active = false;        
+            this.state = "inactive";      
             this._srcB = this._srcA;
             this._srcA = src;
-            setTimeout(() => {
-                this._active = true;        
-            }, 1);
         });
+     }
+
+     imageLoaded(){
+        this.state = "active";
      }
 }

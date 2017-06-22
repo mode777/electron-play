@@ -9,6 +9,7 @@ import { TvRowItemComponent } from "./tv-row-item.component";
 import { TvLaneComponent } from "./tv-lane.component";
 import { TvScreenService } from "./tv-screen.service";
 import { TvScreenComponent } from "./tv-screen.component";
+import { TvPanelComponent } from "./tv-panel.component";
 
 export * from "./tv-screen.service";
 
@@ -22,14 +23,16 @@ export * from "./tv-screen.service";
         TvRowComponent,
         TvRowItemComponent,
         TvLaneComponent,
-        TvScreenComponent
+        TvScreenComponent,
+        TvPanelComponent
     ],
     declarations: [
         TvInputComponent,
         TvRowComponent,
         TvRowItemComponent,
         TvLaneComponent,
-        TvScreenComponent
+        TvScreenComponent,
+        TvPanelComponent
     ],
     providers: [
         TvInputService,
