@@ -33,6 +33,7 @@ import { TvScreenService } from "./tv-screen.service";
             left: 0;
             right: 0;
             bottom: 0;
+            overflow: hidden;
         }
         .overlay {
             background-color: black;

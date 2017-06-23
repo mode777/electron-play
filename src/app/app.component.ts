@@ -11,7 +11,7 @@ import { TvScreenService } from "../tv-components";
     template: `
         <tv-input></tv-input>
         <tv-screen>
-            <tv-panel></tv-panel>
+            <tv-slider [open]="sliderOpen"></tv-slider>
             <!--
             <tv-lane>
                 <tv-row title="Recommended" [selected]="true">
@@ -57,6 +57,7 @@ import { TvScreenService } from "../tv-components";
 export class AppComponent implements AfterContentInit {
     title = "RetroPlay";
     platforms: Observable<PlatformModel[]>
+    sliderOpen = false;
 
     constructor(public source: PlatformSource, private _service: TvScreenService){
         this.platforms = source.observe();
@@ -69,5 +70,9 @@ export class AppComponent implements AfterContentInit {
         setInterval(() => {
             this._service.changeImage(images[idx++ % images.length]);
         }, 5000)
+
+        setTimeout(() => {
+            this.sliderOpen = true;
+        }, 2000);
     }
 }

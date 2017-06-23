@@ -9,7 +9,7 @@ import { TvRowItemComponent } from "./tv-row-item.component";
 import { TvLaneComponent } from "./tv-lane.component";
 import { TvScreenService } from "./tv-screen.service";
 import { TvScreenComponent } from "./tv-screen.component";
-import { TvPanelComponent } from "./tv-panel.component";
+import { TvSliderComponent } from "./tv-slider.component";
 
 export * from "./tv-screen.service";
 
@@ -24,7 +24,7 @@ export * from "./tv-screen.service";
         TvRowItemComponent,
         TvLaneComponent,
         TvScreenComponent,
-        TvPanelComponent
+        TvSliderComponent
     ],
     declarations: [
         TvInputComponent,
@@ -32,7 +32,7 @@ export * from "./tv-screen.service";
         TvRowItemComponent,
         TvLaneComponent,
         TvScreenComponent,
-        TvPanelComponent
+        TvSliderComponent
     ],
     providers: [
         TvInputService,
