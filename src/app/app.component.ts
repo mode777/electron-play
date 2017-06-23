@@ -11,12 +11,7 @@ import { TvScreenService } from "../tv-components";
     template: `
         <tv-input></tv-input>
         <tv-screen>
-<<<<<<< HEAD
-            <tv-slider [open]="sliderOpen"></tv-slider>
-            <!--
-=======
             
->>>>>>> f6920d895f0b553d55bb39bc87e21829a2e6c3dc
             <tv-lane>
                 <tv-row title="Recommended" [selected]="true">
                     <tv-row-item [selected]="true"></tv-row-item>
@@ -47,15 +42,11 @@ import { TvScreenService } from "../tv-components";
                 </tv-row>
             </tv-lane>       
              
-
-            <tv-panel></tv-panel>
+            <tv-slider [open]="sliderOpen"></tv-slider>
         </tv-screen>
         
         <!--<rp-header title="{{title}}"></rp-header>
         <rp-platform></rp-platform>-->
-
-        
-
     `, 
     styles: [`
     `]

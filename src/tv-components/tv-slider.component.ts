@@ -3,9 +3,8 @@ import { Component, OnInit, Input, trigger, state, transition, style, animate } 
 @Component({
     selector: 'tv-slider',
     template: `
-        <div class="tv-panel" 
-            *ngIf="open"
-            [@slideIn] 
+        <div class="tv-panel"
+            [@sliderState]="getSliderState()" 
             [style.width]="width" 
             [ngClass]="position" 
             [style.backgroundColor]="backgroundColor">
@@ -28,14 +27,18 @@ import { Component, OnInit, Input, trigger, state, transition, style, animate } 
         }
     `],
     animations: [
-        trigger('slideIn', [
-            transition(':enter', [
-                style({transform:"translate(100%,0)"}),
-                animate("500ms ease-out", style({transform:"translate(0,0)"})) 
-            ]),
-                transition(':leave', [   // :leave is alias to '* => void'
-                animate(500, style({opacity:0})) 
-            ])
+        trigger('sliderState', [
+            state('inactive-left', style({
+                transform: 'translateX(-100%)'
+            })),
+            state('inactive-right',   style({
+                transform: 'translateX(100%)'
+            })),
+            state('active',   style({
+                transform: 'translateX(0)'
+            })),
+            transition('* => active', animate('500ms ease-out')),
+            transition('active => *', animate('500ms ease-in'))
         ])
     ]
 })
@@ -49,5 +52,9 @@ export class TvSliderComponent implements OnInit {
     constructor() { }
     
     ngOnInit(): void {
+    }
+
+    private getSliderState(){
+        return this.open ? "active" : `inactive-${this.position}`;
     }
 }
