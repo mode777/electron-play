@@ -11,8 +11,7 @@ import { TvScreenService } from "../tv-components";
     template: `
         <tv-input></tv-input>
         <tv-screen>
-            <tv-panel></tv-panel>
-            <!--
+            
             <tv-lane>
                 <tv-row title="Recommended" [selected]="true">
                     <tv-row-item [selected]="true"></tv-row-item>
@@ -42,7 +41,9 @@ import { TvScreenService } from "../tv-components";
                     <tv-row-item></tv-row-item>
                 </tv-row>
             </tv-lane>       
-            --> 
+             
+
+            <tv-panel></tv-panel>
         </tv-screen>
         
         <!--<rp-header title="{{title}}"></rp-header>
