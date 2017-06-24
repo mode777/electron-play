@@ -3,7 +3,7 @@
     "tasks": [
         {
             "taskName": "build",
-            "command": "tsc",
+            "command": "${workspaceRoot}/node_modules/.bin/tsc.cmd",
             "args": [],
             "isShellCommand": true
         }

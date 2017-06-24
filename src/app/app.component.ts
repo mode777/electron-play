@@ -42,7 +42,20 @@ import { TvScreenService } from "../tv-components";
                 </tv-row>
             </tv-lane>       
              
-            <tv-slider [open]="sliderOpen"></tv-slider>
+            <tv-slider [open]="sliderOpen">
+                <tv-slider-title>Settings</tv-slider-title>
+                <tv-v-list>
+                    <tv-slider-heading>Device</tv-slider-heading>
+                    <tv-slider-item icon="network_wifi" [active]="true">Network</tv-slider-item>
+                    <tv-slider-item icon="volume_up">Sound</tv-slider-item>
+                    <tv-slider-item icon="android">Apps</tv-slider-item>
+                    <tv-slider-item icon="tv">Screensaver</tv-slider-item>
+                    <tv-slider-item icon="storage">Storage</tv-slider-item>
+                    <tv-slider-item icon="info_outline">About</tv-slider-item>
+
+                    <tv-slider-heading>Device</tv-slider-heading>
+                </tv-v-list>
+            </tv-slider>
         </tv-screen>
         
         <!--<rp-header title="{{title}}"></rp-header>
@@ -70,6 +83,6 @@ export class AppComponent implements AfterContentInit {
 
         setTimeout(() => {
             this.sliderOpen = true;
-        }, 2000);
+        }, 200);
     }
 }

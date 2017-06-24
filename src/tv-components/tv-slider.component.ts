@@ -19,6 +19,7 @@ import { Component, OnInit, Input, trigger, state, transition, style, animate } 
             display: flex;
             box-shadow: 0 2px 6px 5px rgba(0,0,0,.5);
             overflow: hidden;
+            flex-direction: column;
         }
         .left {
             left: 0;
