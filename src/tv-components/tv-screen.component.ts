@@ -1,10 +1,16 @@
 import { Component, OnInit, Input, trigger, state, style, transition, animate } from '@angular/core';
 import { TvScreenService } from "./tv-screen.service";
 
+import { asap } from 'rxjs/scheduler/asap';
+import { Scheduler } from 'rxjs/Scheduler';
+import { Subscriber } from 'rxjs/Subscriber';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
 @Component({
     selector: 'tv-screen',
     template: `
-        <div class="max">
+        <div class="max viewport">
             <div *ngIf="_srcB" class="max fill" [style.background-color]="backgroundColor">
                 <img [src]="_srcB"/>
             </div>
@@ -26,13 +32,14 @@ import { TvScreenService } from "./tv-screen.service";
             transition('inactive => active', animate('500ms ease-in'))
         ])
     ],
-    styles: [`       
+    styles: [`    
+        .viewport {
+            display: flex;
+        }   
         .max {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            height:100%;
+            width:100%;
             overflow: hidden;
         }
         .overlay {
@@ -62,6 +69,7 @@ export class TvScreenComponent {
     state = "inactive;"
     
     constructor(private _service: TvScreenService) {
+        // TODO: Use 'inspectTime' for throttle once it is released
         this._service.imageChanged.forEach(src => {
             this.state = "inactive";      
             this._srcB = this._srcA;

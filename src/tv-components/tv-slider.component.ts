@@ -16,6 +16,7 @@ import { Component, OnInit, Input, trigger, state, transition, style, animate } 
             position: absolute;
             top: 0;
             bottom: 0;
+            display: flex;
             box-shadow: 0 2px 6px 5px rgba(0,0,0,.5);
             overflow: hidden;
         }
