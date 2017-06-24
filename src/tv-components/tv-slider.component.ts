@@ -20,6 +20,7 @@ import { Component, OnInit, Input, trigger, state, transition, style, animate } 
             box-shadow: 0 2px 6px 5px rgba(0,0,0,.5);
             overflow: hidden;
             flex-direction: column;
+            box-shadow: 
         }
         .left {
             left: 0;
