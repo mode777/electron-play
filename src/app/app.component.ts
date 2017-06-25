@@ -42,7 +42,7 @@ import { TvScreenService } from "../tv-components";
                 </tv-row>
             </tv-lane>       
              
-            <tv-slider [open]="sliderOpen">
+            <tv-slider [open]="sliderOpen" width="480px">
                 <tv-slider-title>Settings</tv-slider-title>
                 <tv-v-list>
                     <tv-slider-heading>Device</tv-slider-heading>
