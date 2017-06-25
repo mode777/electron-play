@@ -8,12 +8,14 @@ import { Observable } from "rxjs/Rx";
 @Component({
     selector: 'tv-slider-menu',
     template: `
-        <tv-scroll-view [target]="focusedItem">
+        <tv-scroll-view class="slider-menu" [target]="focusedItem">
             <ng-content></ng-content>
         </tv-scroll-view>
     `,
     styles: [`
-    
+        .slider-menu {
+            flex-grow: 1;
+        }
     `]
 })
 

@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterContentInit, ViewChild, ElementRef } from '@angular/core';
 import { TvInputService } from "../tv";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/throttle';
 import 'rxjs/add/observable/interval';
 import { PlatformSource, PlatformModel } from "../db.retro-play";
-import { TvScreenService } from "../tv-components";
+import { TvScreenService, TvSliderMenuComponent } from "../tv-components";
 
 @Component({
     selector: 'app-root',
@@ -44,7 +44,7 @@ import { TvScreenService } from "../tv-components";
              
             <tv-slider [open]="sliderOpen" width="480px">
                 <tv-slider-title>Settings</tv-slider-title>
-                <tv-slider-menu>
+                <tv-slider-menu #menu>
                     <tv-slider-heading>Device</tv-slider-heading>
                     <tv-slider-item icon="network_wifi">Network</tv-slider-item>
                     <tv-slider-item icon="volume_up">Sound</tv-slider-item>
@@ -64,6 +64,7 @@ import { TvScreenService } from "../tv-components";
     `]
 })
 export class AppComponent implements AfterContentInit {
+    @ViewChild('menu') menu: TvSliderMenuComponent; 
     title = "RetroPlay";
     platforms: Observable<PlatformModel[]>
     sliderOpen = false;
@@ -73,6 +74,9 @@ export class AppComponent implements AfterContentInit {
     }
 
     ngAfterContentInit(): void {
+        console.log(this.menu);
+        this.menu.activate();
+
         const images = ["./srcA.jpg","./srcB.jpg"]
         let idx = 0;
         this._service.changeImage(images[idx++]);

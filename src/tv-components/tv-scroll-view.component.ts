@@ -5,7 +5,7 @@ import { Component, OnInit, ElementRef, ViewChild, Input, AfterContentInit } fro
     template: `
         <div class="wrapper">
             <div #content class="content" [style.margin-left]="-_scrollX + 'px'" 
-                [style.margin-top]="-_scrollY + 'px'">
+                [style.margin-top]="-_scrollY + 'px'" >
                 <ng-content></ng-content>
             </div>
         </div>
@@ -13,10 +13,10 @@ import { Component, OnInit, ElementRef, ViewChild, Input, AfterContentInit } fro
     styles: [`
         .wrapper {
             position: absolute;
-            top: 0;
             bottom: 0;
             left: 0;
             right:0;
+            top: 120px;
             overflow: hidden;
         }
         .content {

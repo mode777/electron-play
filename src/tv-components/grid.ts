@@ -30,6 +30,7 @@ export class Grid<T extends GridItem> implements Activatable {
             this._active = true;
             this._activateItems();
             this.onActivate.emit();
+            this.focusItem(this._items[0]);
         }
     }
     deactivate() {
@@ -101,7 +102,10 @@ export class Grid<T extends GridItem> implements Activatable {
             this._focusedItem.unfocus();
             this._focusedItem = null;
             this.onFocusChanged.emit();
+            return;
         }
+        else if(!item)
+            return;
 
         if(!item.hasFocus || item !== this._focusedItem){
             if(this._focusedItem) 
