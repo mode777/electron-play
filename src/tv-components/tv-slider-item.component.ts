@@ -1,4 +1,8 @@
-import { Component, OnInit, Input, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, Input, trigger, state, style, transition, animate, EventEmitter, Output, ElementRef } from '@angular/core';
+import { Selectable } from "./interfaces";
+import { GridItem } from "./grid-item";
+import { TvInputService } from "../tv";
+import { Observable } from "rxjs";
 
 @Component({
     selector: 'tv-slider-item',
@@ -48,17 +52,30 @@ import { Component, OnInit, Input, trigger, state, style, transition, animate } 
     ]
 })
 
-export class TvSliderItemComponent implements OnInit {
+export class TvSliderItemComponent extends GridItem implements Selectable {
+    
+    element: ElementRef;
+
     @Input() color = "white";
     @Input() icon = null;
     @Input() highlight = "white";
-    @Input() active = false;
 
-    constructor() { }
+    @Output() onSelect = new EventEmitter<void>();
 
-    ngOnInit() { }
+    constructor(private _input: TvInputService) {
+        super();
+        Observable
+        this._input.select.debounce(() => Observable.interval(500))
+            .forEach(ev => this.select());
+     }
+
+    select() {
+        if(this.hasFocus && this.isActive){
+            this.onSelect.emit();
+        }
+    }
 
     get _state() {
-        return this.active ? "active" : "inactive";
+        return this.hasFocus ? "active" : "inactive";
     }
 }

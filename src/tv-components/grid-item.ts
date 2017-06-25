@@ -1,32 +1,45 @@
 import { Selectable, Activatable, Focusable } from "./interfaces";
-import { EventEmitter, ElementRef } from "@angular/core";
+import { EventEmitter, ElementRef, Output } from "@angular/core";
 
-export abstract class GridItem implements Selectable, Activatable, Focusable {
+export abstract class GridItem implements Activatable, Focusable {
     
-    onFocus = new EventEmitter<void>();
-    onUnfocus = new EventEmitter<void>();
-    onActivate = new EventEmitter<void>();
-    onDeactivate = new EventEmitter<void>();
-    onSelect = new EventEmitter<void>();
+    @Output() onFocus = new EventEmitter<void>();
+    @Output() onUnfocus = new EventEmitter<void>();
+    @Output() onActivate = new EventEmitter<void>();
+    @Output() onDeactivate = new EventEmitter<void>();
 
     private _hasFocus = false;
     private _isActive = false;
     
     focus() { 
-        this._isActive = true;
-        this._hasFocus = true; 
+        if(!this.hasFocus){
+            this.activate();
+            this._hasFocus = true;
+            this.onFocus.emit(); 
+        }
     }    
     
-    unfocus() { this._hasFocus = false; }
+    unfocus() { 
+        if(this.hasFocus){
+            this._hasFocus = false;
+            this.onUnfocus.emit(); 
+        }
+    }
     
-    activate() { this._isActive = true; }
+    activate() { 
+        if(!this.isActive){
+            this._isActive = true; 
+            this.onActivate.emit();
+        }
+    }
     
     deactivate() { 
-        this._hasFocus = false;
-        this._isActive = false; 
+        if(this.isActive){
+            this.unfocus();            
+            this._isActive = false; 
+            this.onDeactivate.emit();
+        }
     }
-
-    abstract select();
     
     get isActive() { return this._isActive; }
     get hasFocus() { return this._hasFocus; }

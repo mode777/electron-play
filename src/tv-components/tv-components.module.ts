@@ -12,8 +12,9 @@ import { TvScreenComponent } from "./tv-screen.component";
 import { TvSliderComponent } from "./tv-slider.component";
 import { TvSliderTitleComponent } from "./tv-slider-title.component";
 import { TvSliderHeadingComponent } from "./tv-slider-heading.component";
-import { TvVListComponent } from "./tv-v-list.component";
+import { TvSliderMenuComponent } from "./tv-slider-menu.component";
 import { TvSliderItemComponent } from "./tv-slider-item.component";
+import { TvScrollViewComponent } from "./tv-scroll-view.component";
 
 export * from "./tv-screen.service";
 
@@ -31,8 +32,9 @@ export * from "./tv-screen.service";
         TvSliderComponent,
         TvSliderTitleComponent,
         TvSliderHeadingComponent,
-        TvVListComponent,
-        TvSliderItemComponent
+        TvSliderMenuComponent,
+        TvSliderItemComponent,
+        TvScrollViewComponent
     ],
     declarations: [
         TvInputComponent,
@@ -43,8 +45,9 @@ export * from "./tv-screen.service";
         TvSliderComponent,
         TvSliderTitleComponent,
         TvSliderHeadingComponent,
-        TvVListComponent,
-        TvSliderItemComponent
+        TvSliderMenuComponent,
+        TvSliderItemComponent,
+        TvScrollViewComponent
     ],
     providers: [
         TvInputService,
