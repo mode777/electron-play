@@ -1,31 +1,39 @@
-import { Component, OnInit, ContentChildren, QueryList, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ContentChildren, QueryList, ViewChild, AfterContentInit, Input } from '@angular/core';
 import { Grid } from "./grid";
-import { TvSliderItemComponent } from "./tv-slider-item.component";
+import { TvMenuItemComponent } from "./tv-menu-item.component";
 import { TvInputService } from "../tv";
 import { TvScrollViewComponent } from "./tv-scroll-view.component";
 import { Observable } from "rxjs/Rx";
 
 @Component({
-    selector: 'tv-slider-menu',
+    selector: 'tv-menu',
     template: `
-        <tv-scroll-view class="slider-menu" [target]="focusedItem">
-            <ng-content></ng-content>
-        </tv-scroll-view>
+        <tv-slider [open]="open" width="480px" position="right">
+            <tv-slider-title>{{title}}</tv-slider-title>
+            <tv-scroll-view class="slider-menu" [target]="focusedItem.element">
+                <ng-content></ng-content>
+            </tv-scroll-view>
+        </tv-slider>
     `,
     styles: [`
         .slider-menu {
-            flex-grow: 1;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 128px;
         }
     `]
 })
 
-export class TvSliderMenuComponent extends Grid<TvSliderItemComponent> implements AfterContentInit {
-    @ContentChildren(TvSliderItemComponent) query: QueryList<TvSliderItemComponent>;
+export class TvMenuComponent extends Grid<TvMenuItemComponent> implements AfterContentInit {
+    @Input() title = "Menu";
+    @Input() open = false;
+    @ContentChildren(TvMenuItemComponent) query: QueryList<TvMenuItemComponent>;
     @ViewChild(TvScrollViewComponent) scrollView: TvScrollViewComponent;
     
     constructor(private _input: TvInputService) { 
         super("row", 1);
-
     }
 
     ngAfterContentInit(): void {

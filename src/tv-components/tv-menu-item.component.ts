@@ -5,7 +5,7 @@ import { TvInputService } from "../tv";
 import { Observable } from "rxjs";
 
 @Component({
-    selector: 'tv-slider-item',
+    selector: 'tv-menu-item',
     template: `
         <div class="slider-item" [style.color]="color" >
             <div [@state]="_state" class="bg" [style.background-color]="highlight"></div>
@@ -34,9 +34,9 @@ import { Observable } from "rxjs";
         }
         .icon {
             margin-right: 20px;
-            font-size:32px;
-            width: 32px;
-            height: 32px;
+            font-size:40px;
+            width: 40px;
+            height: 40px;
         }
     `],
     animations: [
@@ -47,22 +47,22 @@ import { Observable } from "rxjs";
             state('active',   style({
                 opacity: 0.1
             })),
-            transition('inactive <=> active', animate('100ms ease-in')),
+            transition('inactive => active', animate('100ms ease-in')),
+            transition('active => inactive', animate('750ms ease-out')),
         ])
     ]
 })
 
-export class TvSliderItemComponent extends GridItem implements Selectable {
+export class TvMenuItemComponent extends GridItem implements Selectable {
     
-    element: ElementRef;
-
+    
     @Input() color = "white";
     @Input() icon = null;
     @Input() highlight = "white";
 
     @Output() onSelect = new EventEmitter<void>();
 
-    constructor(private _input: TvInputService) {
+    constructor(public readonly element: ElementRef, private _input: TvInputService) {
         super();
         Observable
         this._input.select.debounce(() => Observable.interval(500))

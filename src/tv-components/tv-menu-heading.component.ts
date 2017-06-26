@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-    selector: 'tv-slider-heading',
+    selector: 'tv-menu-heading',
     template: `
         <div class="slider-heading" [style.color]="color">
             <ng-content></ng-content>
@@ -18,7 +18,7 @@ import { Component, OnInit, Input } from '@angular/core';
     `] 
 })
 
-export class TvSliderHeadingComponent {
+export class TvMenuHeadingComponent {
     @Input() color = "#609491";
 
     constructor() { }

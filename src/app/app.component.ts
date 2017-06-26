@@ -4,7 +4,7 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/throttle';
 import 'rxjs/add/observable/interval';
 import { PlatformSource, PlatformModel } from "../db.retro-play";
-import { TvScreenService, TvSliderMenuComponent } from "../tv-components";
+import { TvScreenService, TvMenuComponent } from "../tv-components";
 
 @Component({
     selector: 'app-root',
@@ -40,22 +40,33 @@ import { TvScreenService, TvSliderMenuComponent } from "../tv-components";
                     <tv-row-item></tv-row-item>
                     <tv-row-item></tv-row-item>
                 </tv-row>
-            </tv-lane>       
+            </tv-lane>     
+
+            <tv-menu #menu [open]="sliderOpen" title="Settings">
+                <tv-menu-heading>Device</tv-menu-heading>
+                <tv-menu-item icon="network_wifi">Network</tv-menu-item>
+                <tv-menu-item icon="volume_up">Sound</tv-menu-item>
+                <tv-menu-item icon="android">Apps</tv-menu-item>
+                <tv-menu-item icon="tv">Screensaver</tv-menu-item>
+                <tv-menu-item icon="storage">Storage</tv-menu-item>
+                <tv-menu-item icon="info_outline">About</tv-menu-item>
+                <tv-menu-heading>Preferences</tv-menu-heading>
+                <tv-menu-item icon="access_time">Date &amp; time</tv-menu-item>
+                <tv-menu-item icon="language">Language</tv-menu-item>
+                <tv-menu-item icon="keyboard">Keyboard</tv-menu-item>
+                <tv-menu-item icon="home">Home screen</tv-menu-item>
+                <tv-menu-item icon="search">Search</tv-menu-item>
+                <tv-menu-item icon="mic">Speech</tv-menu-item>
+                <tv-menu-item icon="accessibility">Accessibility</tv-menu-item>
+                <tv-menu-heading>Personal</tv-menu-heading>
+                <tv-menu-item icon="location_on">Location</tv-menu-item>
+                <tv-menu-item icon="lock">Security &amp; restrictions</tv-menu-item>
+                <tv-menu-item icon="timeline">Usage &amp; diagnostics</tv-menu-item>
+                <tv-menu-heading>Accounts</tv-menu-heading>
+                <tv-menu-item icon="add">Add account</tv-menu-item>
+            </tv-menu>  
              
-            <tv-slider [open]="sliderOpen" width="480px">
-                <tv-slider-title>Settings</tv-slider-title>
-                <tv-slider-menu #menu>
-                    <tv-slider-heading>Device</tv-slider-heading>
-                    <tv-slider-item icon="network_wifi">Network</tv-slider-item>
-                    <tv-slider-item icon="volume_up">Sound</tv-slider-item>
-                    <tv-slider-item icon="android">Apps</tv-slider-item>
-                    <tv-slider-item icon="tv">Screensaver</tv-slider-item>
-                    <tv-slider-item icon="storage">Storage</tv-slider-item>
-                    <tv-slider-item icon="info_outline">About</tv-slider-item>
-                    <tv-slider-heading>Device</tv-slider-heading>
-                </tv-slider-menu>
-            </tv-slider>
-        </tv-screen>
+           
         
         <!--<rp-header title="{{title}}"></rp-header>
         <rp-platform></rp-platform>-->
@@ -64,7 +75,7 @@ import { TvScreenService, TvSliderMenuComponent } from "../tv-components";
     `]
 })
 export class AppComponent implements AfterContentInit {
-    @ViewChild('menu') menu: TvSliderMenuComponent; 
+    @ViewChild('menu') menu: TvMenuComponent; 
     title = "RetroPlay";
     platforms: Observable<PlatformModel[]>
     sliderOpen = false;

@@ -13,9 +13,9 @@ import { TvLaneComponent } from "./tv-lane.component";
 import { TvScreenComponent } from "./tv-screen.component";
 import { TvSliderComponent } from "./tv-slider.component";
 import { TvSliderTitleComponent } from "./tv-slider-title.component";
-import { TvSliderHeadingComponent } from "./tv-slider-heading.component";
-import { TvSliderMenuComponent } from "./tv-slider-menu.component";
-import { TvSliderItemComponent } from "./tv-slider-item.component";
+import { TvMenuHeadingComponent } from "./tv-menu-heading.component";
+import { TvMenuComponent } from "./tv-menu.component";
+import { TvMenuItemComponent } from "./tv-menu-item.component";
 import { TvScrollViewComponent } from "./tv-scroll-view.component";
 
 @NgModule({
@@ -31,9 +31,9 @@ import { TvScrollViewComponent } from "./tv-scroll-view.component";
         TvScreenComponent,
         TvSliderComponent,
         TvSliderTitleComponent,
-        TvSliderHeadingComponent,
-        TvSliderMenuComponent,
-        TvSliderItemComponent,
+        TvMenuHeadingComponent,
+        TvMenuComponent,
+        TvMenuItemComponent,
         TvScrollViewComponent
     ],
     declarations: [
@@ -44,9 +44,9 @@ import { TvScrollViewComponent } from "./tv-scroll-view.component";
         TvScreenComponent,
         TvSliderComponent,
         TvSliderTitleComponent,
-        TvSliderHeadingComponent,
-        TvSliderMenuComponent,
-        TvSliderItemComponent,
+        TvMenuHeadingComponent,
+        TvMenuComponent,
+        TvMenuItemComponent,
         TvScrollViewComponent
     ],
     providers: [
@@ -63,9 +63,9 @@ export * from "./tv-lane.component";
 export * from "./tv-screen.component";
 export * from "./tv-slider.component";
 export * from "./tv-slider-title.component";
-export * from "./tv-slider-heading.component";
-export * from "./tv-slider-menu.component";
-export * from "./tv-slider-item.component";
+export * from "./tv-menu-heading.component";
+export * from "./tv-menu.component";
+export * from "./tv-menu-item.component";
 export * from "./tv-scroll-view.component";
 
 export * from "./tv-screen.service";
