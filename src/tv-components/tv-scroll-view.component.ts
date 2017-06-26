@@ -41,7 +41,6 @@ export class TvScrollViewComponent implements AfterContentInit {
 
     update(){
         setTimeout(() => {            
-            console.log(this.content, this.target, this.viewport)
             if(!this.target.nativeElement)
                 return; 
 
@@ -51,18 +50,16 @@ export class TvScrollViewComponent implements AfterContentInit {
             const contentRect = (<HTMLElement>this.content.nativeElement).getBoundingClientRect();
             const viewportRect = (<HTMLElement>this.viewport.nativeElement).getBoundingClientRect();
             
-            const spaceToScrollDown = Math.max(contentRect.bottom - viewportRect.bottom, 0);
-            const spaceToScrollUp = Math.max(viewportRect.top - contentRect.top, 0);
-            const distBottom = viewportRect.bottom - targetRect.bottom;
-            const distTop = targetRect.top - viewportRect.top + this._scrollY; 
-
-            console.log("top dist elem", distTop);
-            console.log("viewport height ", viewportRect.height);
-            console.log("space to scroll ", contentRect.bottom - viewportRect.bottom);
-            console.log("target x", targetRect.top);
-
-            if(distTop > viewportRect.width/2 && spaceToScrollDown > 0){
-                this._scrollY = distTop - viewportRect.width/2, spaceToScrollDown;
+            const baseline = viewportRect.height * 0.61 + viewportRect.top;
+            const remainBottom = Math.max(contentRect.bottom - viewportRect.bottom, 0);
+            
+            if(remainBottom > 0 && targetRect.bottom > baseline){
+                const scroll = targetRect.bottom - baseline;
+                this._scrollY += Math.min(remainBottom, scroll);
+            }
+            else if(this._scrollY > 0 && targetRect.top < baseline){
+                const scroll = baseline - targetRect.top;
+                this._scrollY -= Math.min(this._scrollY, scroll);
             }
         });
     }

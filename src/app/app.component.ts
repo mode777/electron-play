@@ -12,7 +12,7 @@ import { TvScreenService, TvMenuComponent } from "../tv-components";
         <tv-input></tv-input>
         <tv-screen>
             
-            <tv-lane>
+            <!--<tv-lane>
                 <tv-row title="Recommended" [selected]="true">
                     <tv-row-item [selected]="true"></tv-row-item>
                     <tv-row-item *ngFor="let platform of platforms | async">
@@ -40,7 +40,7 @@ import { TvScreenService, TvMenuComponent } from "../tv-components";
                     <tv-row-item></tv-row-item>
                     <tv-row-item></tv-row-item>
                 </tv-row>
-            </tv-lane>     
+            </tv-lane>   -->  
 
             <tv-menu #menu [open]="sliderOpen" title="Settings">
                 <tv-menu-heading>Device</tv-menu-heading>
@@ -65,8 +65,7 @@ import { TvScreenService, TvMenuComponent } from "../tv-components";
                 <tv-menu-heading>Accounts</tv-menu-heading>
                 <tv-menu-item icon="add">Add account</tv-menu-item>
             </tv-menu>  
-             
-           
+                       
         
         <!--<rp-header title="{{title}}"></rp-header>
         <rp-platform></rp-platform>-->
