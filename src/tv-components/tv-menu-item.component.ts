@@ -48,7 +48,7 @@ import { Observable } from "rxjs";
                 opacity: 0.1
             })),
             transition('inactive => active', animate('100ms ease-in')),
-            transition('active => inactive', animate('750ms ease-out')),
+            transition('active => inactive', animate('500ms ease-out')),
         ])
     ]
 })
