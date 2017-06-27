@@ -5,7 +5,7 @@ import { TvInputService } from "../tv";
 import { Observable } from "rxjs";
 import { TvMenuItemComponent } from "./tv-menu-item.component";
 
-import _style from "./style/tv-menu.style";
+import { menuStyle as _style } from "./style";
 
 @Component({
     selector: 'tv-menu-switch',
