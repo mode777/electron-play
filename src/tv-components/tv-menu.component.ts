@@ -22,6 +22,7 @@ import { Observable } from "rxjs/Rx";
             right: 0;
             bottom: 0;
             top: 128px;
+            padding-bottom: 64px;
         }
     `]
 })

@@ -20,7 +20,7 @@ import { Component, OnInit, ElementRef, ViewChild, Input, AfterContentInit, Rend
             overflow: hidden;
         }
         .content {
-            transition: margin 130ms ease-out;
+            transition: margin 200ms ease-in-out;
         }
     `]
 })
@@ -53,12 +53,12 @@ export class TvScrollViewComponent implements AfterContentInit {
             const baseline = viewportRect.height * 0.61 + viewportRect.top;
             const remainBottom = Math.max(contentRect.bottom - viewportRect.bottom, 0);
             
-            if(remainBottom > 0 && targetRect.bottom > baseline){
+            if(remainBottom > 0 && targetRect.bottom > baseline+5){
                 const scroll = targetRect.bottom - baseline;
                 this._scrollY += Math.min(remainBottom, scroll);
             }
-            else if(this._scrollY > 0 && targetRect.top < baseline){
-                const scroll = baseline - targetRect.top;
+            else if(this._scrollY > 0 && targetRect.bottom < baseline-5){
+                const scroll = baseline - targetRect.bottom;
                 this._scrollY -= Math.min(this._scrollY, scroll);
             }
         });
