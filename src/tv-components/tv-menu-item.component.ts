@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
         <div class="slider-item" [style.color]="color" >
             <div [@state]="_state" class="bg" [style.background-color]="highlight"></div>
             <md-icon *ngIf="!!icon" class="icon">{{icon}}</md-icon>
-            <ng-content style="height: 32px"></ng-content>
+            <ng-content style="height: 50px"></ng-content>
         </div>
     `,
     styles: [`
@@ -33,6 +33,7 @@ import { Observable } from "rxjs";
             font-weight: 400;
         }
         .icon {
+            display: flex;
             margin-right: 20px;
             font-size:40px;
             width: 40px;
@@ -48,7 +49,7 @@ import { Observable } from "rxjs";
                 opacity: 0.1
             })),
             transition('inactive => active', animate('100ms ease-in')),
-            transition('active => inactive', animate('500ms ease-out')),
+            transition('active => inactive', animate('600ms ease-out')),
         ])
     ]
 })

@@ -37,10 +37,15 @@ export class TvMenuComponent extends Grid<TvMenuItemComponent> implements AfterC
         super("row", 1);
     }
 
+    private _updateItems(){
+        const arr = this.query.toArray();
+        console.log(arr);
+        this.setItems(arr);
+    }
+
     ngAfterContentInit(): void {
-        console.log(this.query);
-        this.setItems(this.query.toArray());
-        this.query.changes.forEach(() => this.setItems(this.query.toArray()));
+        this.query.changes.forEach(() => this._updateItems());
+        this._updateItems();
 
         this.onItemsChanged.forEach(() => this.scrollView.update());
         this.onFocusChanged.forEach(() => this.scrollView.update());
