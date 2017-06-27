@@ -64,7 +64,7 @@ import { TvScreenService, TvMenuComponent } from "../tv-components";
                 <tv-menu-item icon="timeline">Usage &amp; diagnostics</tv-menu-item>
                 <tv-menu-heading>Accounts</tv-menu-heading>
                 <tv-menu-item icon="add">Add account</tv-menu-item>
-                <tv-menu-toggle>Enable Wifi</tv-menu-toggle>
+                <tv-menu-switch>Enable Wifi</tv-menu-switch>
             </tv-menu>  
                        
         

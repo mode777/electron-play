@@ -39,7 +39,6 @@ export class TvMenuComponent extends Grid<TvMenuItemComponent> implements AfterC
 
     private _updateItems(){
         const arr = this.query.toArray();
-        console.log(arr);
         this.setItems(arr);
     }
 

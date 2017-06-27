@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { menuStyle as _style } from "./style";
 
 @Component({
     selector: 'tv-menu-heading',
@@ -9,17 +10,17 @@ import { Component, OnInit, Input } from '@angular/core';
     `,
     styles: [`
         .slider-heading {
-            padding: 20px;
-            padding-left: 32px;
-            font-family: 'Roboto', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
+            padding-bottom: ${_style.heading.padding};
+            padding-left: ${_style.left};
+            font-family: ${_style.heading.fontFamily};
+            font-size: ${_style.heading.fontSize};
+            font-weight: ${_style.heading.fontWeight};
         }
     `] 
 })
 
 export class TvMenuHeadingComponent {
-    @Input() color = "#609491";
+    @Input() color = _style.heading.colorDefault;
 
     constructor() { }
 }

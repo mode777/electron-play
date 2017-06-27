@@ -5,8 +5,10 @@ import { TvInputService } from "../tv";
 import { Observable } from "rxjs";
 import { TvMenuItemComponent } from "./tv-menu-item.component";
 
+import _style from "./style/tv-menu.style";
+
 @Component({
-    selector: 'tv-menu-toggle',
+    selector: 'tv-menu-switch',
     template: `
         <tv-menu-item #inner [color]="color" [icon]="icon" [highlight]="highlight">
             <ng-content></ng-content> 
@@ -16,13 +18,13 @@ import { TvMenuItemComponent } from "./tv-menu-item.component";
     styles: [`
         .switch {
             position: absolute;
-            right: 16px;
+            right: ${_style.item.padding};
         }
     `],
-    providers: [{provide: TvMenuItemComponent, useExisting: forwardRef(() => TvMenuToggleComponent)}]
+    providers: [{provide: TvMenuItemComponent, useExisting: forwardRef(() => TvMenuSwitchComponent)}]
 })
 
-export class TvMenuToggleComponent extends TvMenuItemComponent implements Selectable, OnInit {
+export class TvMenuSwitchComponent extends TvMenuItemComponent implements Selectable, OnInit {
 
     @Input() checked = false;
 

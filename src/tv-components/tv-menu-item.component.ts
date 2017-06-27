@@ -4,19 +4,21 @@ import { GridItem } from "./grid-item";
 import { TvInputService } from "../tv";
 import { Observable } from "rxjs";
 
+import { menuStyle as _style } from "./style";
+
 @Component({
     selector: 'tv-menu-item',
     template: `
         <div class="slider-item" [style.color]="color" >
             <div [@state]="_state" class="bg" [style.background-color]="highlight"></div>
             <md-icon *ngIf="!!icon" class="icon">{{icon}}</md-icon>
-            <ng-content style="height: 50px"></ng-content>
+            <ng-content></ng-content>
         </div>
     `,
     styles: [`
         .bg {
-            left: -32px;
-            right: -32px;
+            left: -${_style.left};
+            right: -${_style.left};
             height: 100%;
             position: absolute;
         }
@@ -24,20 +26,20 @@ import { Observable } from "rxjs";
         .slider-item {
             position: relative;
             display: flex;
-            align-items: center;
+            align-items: ${_style.item.alignV};
             flex-direction: row;
-            padding: 16px;
-            padding-left: 32px;
-            font-family: 'Roboto', sans-serif;
-            font-size: 16px;
-            font-weight: 400;
+            padding: ${_style.item.padding};
+            padding-left: ${_style.left};
+            font-family: ${_style.item.fontFamily};
+            font-size: ${_style.item.fontSize};
+            font-weight: ${_style.item.fontWeight};
         }
         .icon {
             display: flex;
-            margin-right: 20px;
-            font-size:40px;
-            width: 40px;
-            height: 40px;
+            margin-right: ${_style.item.icon.marginRight};
+            font-size: ${_style.item.icon.fontSize};
+            width: ${_style.item.icon.fontSize};
+            height: ${_style.item.icon.fontSize};
         }
     `],
     animations: [
@@ -46,10 +48,10 @@ import { Observable } from "rxjs";
                 opacity: 0.0
             })),
             state('active',   style({
-                opacity: 0.1
+                opacity: _style.item.activeOpacity
             })),
-            transition('inactive => active', animate('100ms ease-in')),
-            transition('active => inactive', animate('600ms ease-out')),
+            transition('inactive => active', animate(_style.item.activeAnimation)),
+            transition('active => inactive', animate(_style.item.inactiveAnimation)),
         ])
     ]
 })
@@ -57,9 +59,9 @@ import { Observable } from "rxjs";
 export class TvMenuItemComponent extends GridItem implements Selectable {
     
     
-    @Input() color = "white";
+    @Input() color = _style.item.defaultColor;
     @Input() icon = null;
-    @Input() highlight = "white";
+    @Input() highlight = _style.item.defaultHightlight;
 
     @Output() onSelect = new EventEmitter<void>();
 
