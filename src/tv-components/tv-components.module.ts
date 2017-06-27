@@ -18,6 +18,7 @@ import { TvMenuComponent } from "./tv-menu.component";
 import { TvMenuItemComponent } from "./tv-menu-item.component";
 import { TvScrollViewComponent } from "./tv-scroll-view.component";
 import { TvMenuToggleComponent } from "./tv-menu-toggle.component";
+import { TvSwitchComponent } from "./tv-switch-component";
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { TvMenuToggleComponent } from "./tv-menu-toggle.component";
         TvMenuComponent,
         TvMenuItemComponent,
         TvScrollViewComponent,
-        TvMenuToggleComponent
+        TvMenuToggleComponent,
+        TvSwitchComponent
     ],
     declarations: [
         TvInputComponent,
@@ -50,7 +52,8 @@ import { TvMenuToggleComponent } from "./tv-menu-toggle.component";
         TvMenuComponent,
         TvMenuItemComponent,
         TvScrollViewComponent,
-        TvMenuToggleComponent
+        TvMenuToggleComponent,
+        TvSwitchComponent
     ],
     providers: [
         TvInputService,

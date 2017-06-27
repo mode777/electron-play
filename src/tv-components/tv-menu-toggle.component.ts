@@ -9,17 +9,23 @@ import { TvMenuItemComponent } from "./tv-menu-item.component";
     selector: 'tv-menu-toggle',
     template: `
         <tv-menu-item #inner [color]="color" [icon]="icon" [highlight]="highlight">
-            <ng-content></ng-content> [CUSTOMSTUFF]
+            <ng-content></ng-content> 
+            <tv-switch class="switch" [checked]="checked"></tv-switch>
         </tv-menu-item>
     `,
     styles: [`
-        
+        .switch {
+            position: absolute;
+            right: 16px;
+        }
     `],
     providers: [{provide: TvMenuItemComponent, useExisting: forwardRef(() => TvMenuToggleComponent)}]
 })
 
-export class TvMenuToggleComponent extends TvMenuItemComponent implements Selectable {
-    
+export class TvMenuToggleComponent extends TvMenuItemComponent implements Selectable, OnInit {
+
+    @Input() checked = false;
+
     @ViewChild("inner") inner: TvMenuItemComponent;
     
     constructor(element: ElementRef, input: TvInputService) {
@@ -46,4 +52,7 @@ export class TvMenuToggleComponent extends TvMenuItemComponent implements Select
         this.inner.deactivate();
     }
 
+    ngOnInit(): void {
+        this.onSelect.forEach(() => this.checked = !this.checked);
+    }
 }

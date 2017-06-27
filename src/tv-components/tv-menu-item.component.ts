@@ -66,7 +66,7 @@ export class TvMenuItemComponent extends GridItem implements Selectable {
     constructor(public readonly element: ElementRef, private _input: TvInputService) {
         super();
         Observable
-        this._input.select.debounce(() => Observable.interval(500))
+        this._input.select.debounce(() => Observable.interval(50))
             .forEach(ev => this.select());
      }
 
