@@ -10,11 +10,12 @@ import { menuStyle as _style } from "./style";
     `,
     styles: [`
         .slider-heading {
-            padding-bottom: ${_style.heading.padding};
-            padding-left: ${_style.left};
+            padding: ${_style.heading.padding};
+            padding-left: ${_style.paddingLeft};
             font-family: ${_style.heading.fontFamily};
             font-size: ${_style.heading.fontSize};
             font-weight: ${_style.heading.fontWeight};
+            opacity: .6;
         }
     `] 
 })

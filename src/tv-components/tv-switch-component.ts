@@ -1,4 +1,5 @@
 import { Component, OnInit, trigger, state, style, transition, animate, Input } from '@angular/core';
+import { switchStyle } from "./style/tv-switch.style";
 
 @Component({
     selector: 'tv-switch',
@@ -12,37 +13,38 @@ import { Component, OnInit, trigger, state, style, transition, animate, Input } 
         .container {
             display: flex;
             position: relative;
-            width: 50px;
-            height: 25px;
+            width: ${switchStyle.width};
+            height: ${switchStyle.height};
         }
         .rail {
             display: flex;
             position: absolute;
-            left: 8px;
-            top: 4px;
-            height: 17px;
-            width:35px;
-            border-radius: 8px;
+            left: ${switchStyle.rail.left};
+            top: ${switchStyle.rail.top};
+            height: ${switchStyle.rail.height};
+            width: ${switchStyle.rail.width};
+            border-radius: ${switchStyle.rail.borderRadius};
+            opacity: ${switchStyle.rail.opacity};
         }
         .knob {
             display: flex;
             position: absolute;
-            top: 0px;
-            height: 25px;
-            width:25px;
+            top: ${switchStyle.knob.top};
+            height: ${switchStyle.knob.diameter};
+            width:${switchStyle.knob.diameter};
             border-radius: 50%;
         }
     `],
     animations: [
         trigger('triggerRail', [
-            state('on' , style({ backgroundColor: "#4f6d6f" })),
-            state('off', style({ backgroundColor: "#767e82"  })),
-            transition('on <=> off', animate('300ms ease-in-out'))
+            state('on' , style({ backgroundColor: switchStyle.colorOn })),
+            state('off', style({ backgroundColor: switchStyle.colorOff  })),
+            transition('on <=> off', animate(switchStyle.animation))
         ]),
         trigger('triggerKnob', [
-            state('on' , style({ backgroundColor: "#7dc7c0", left: "26px" })),
-            state('off', style({ backgroundColor: "#b9b9b9", left: "0px"  })),
-            transition('on <=> off', animate('300ms ease-in-out'))
+            state('on' , style({ backgroundColor: "#7dc7c0", left: switchStyle.knob.leftOn })),
+            state('off', style({ backgroundColor: "#b9b9b9", left: switchStyle.knob.leftOff })),
+            transition('on <=> off', animate(switchStyle.animation))
         ]),
     ]
 })

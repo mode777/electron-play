@@ -4,11 +4,12 @@ import { TvMenuItemComponent } from "./tv-menu-item.component";
 import { TvInputService } from "../tv";
 import { TvScrollViewComponent } from "./tv-scroll-view.component";
 import { Observable } from "rxjs/Rx";
+import { menuStyle } from "./style/index";
 
 @Component({
     selector: 'tv-menu',
     template: `
-        <tv-slider [open]="open" width="480px" position="right">
+        <tv-slider [open]="open" width="${menuStyle.width}" position="${menuStyle.position}">
             <tv-slider-title>{{title}}</tv-slider-title>
             <tv-scroll-view class="slider-menu" [target]="focusedItem.element">
                 <ng-content></ng-content>
@@ -21,15 +22,17 @@ import { Observable } from "rxjs/Rx";
             left: 0;
             right: 0;
             bottom: 0;
-            top: 128px;
-            padding-bottom: 64px;
+            top: ${menuStyle.offsetTop};
+            padding-bottom: ${menuStyle.paddingBottom};
         }
     `]
 })
 
 export class TvMenuComponent extends Grid<TvMenuItemComponent> implements AfterContentInit {
-    @Input() title = "Menu";
-    @Input() open = false;
+    
+    @Input() title = menuStyle.defaultTitle;
+    @Input() open = menuStyle.defaultOpen;
+
     @ContentChildren(TvMenuItemComponent) query: QueryList<TvMenuItemComponent>;
     @ViewChild(TvScrollViewComponent) scrollView: TvScrollViewComponent;
     

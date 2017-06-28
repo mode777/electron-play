@@ -4,7 +4,7 @@ import { GridItem } from "./grid-item";
 import { TvInputService } from "../tv";
 import { Observable } from "rxjs";
 
-import { menuStyle as _style } from "./style";
+import { menuStyle } from "./style";
 
 @Component({
     selector: 'tv-menu-item',
@@ -17,8 +17,8 @@ import { menuStyle as _style } from "./style";
     `,
     styles: [`
         .bg {
-            left: -${_style.left};
-            right: -${_style.left};
+            left: -${menuStyle.paddingLeft};
+            right: -${menuStyle.paddingLeft};
             height: 100%;
             position: absolute;
         }
@@ -26,20 +26,20 @@ import { menuStyle as _style } from "./style";
         .slider-item {
             position: relative;
             display: flex;
-            align-items: ${_style.item.alignV};
+            align-items: ${menuStyle.item.alignV};
             flex-direction: row;
-            padding: ${_style.item.padding};
-            padding-left: ${_style.left};
-            font-family: ${_style.item.fontFamily};
-            font-size: ${_style.item.fontSize};
-            font-weight: ${_style.item.fontWeight};
+            padding: ${menuStyle.item.padding};
+            padding-left: ${menuStyle.paddingLeft};
+            font-family: ${menuStyle.item.fontFamily};
+            font-size: ${menuStyle.item.fontSize};
+            font-weight: ${menuStyle.item.fontWeight};
         }
         .icon {
             display: flex;
-            margin-right: ${_style.item.icon.marginRight};
-            font-size: ${_style.item.icon.fontSize};
-            width: ${_style.item.icon.fontSize};
-            height: ${_style.item.icon.fontSize};
+            margin-right: ${menuStyle.item.icon.marginRight};
+            font-size: ${menuStyle.item.icon.fontSize};
+            width: ${menuStyle.item.icon.fontSize};
+            height: ${menuStyle.item.icon.fontSize};
         }
     `],
     animations: [
@@ -48,10 +48,10 @@ import { menuStyle as _style } from "./style";
                 opacity: 0.0
             })),
             state('active',   style({
-                opacity: _style.item.activeOpacity
+                opacity: menuStyle.item.activeOpacity
             })),
-            transition('inactive => active', animate(_style.item.activeAnimation)),
-            transition('active => inactive', animate(_style.item.inactiveAnimation)),
+            transition('inactive => active', animate(menuStyle.item.activeAnimation)),
+            transition('active => inactive', animate(menuStyle.item.inactiveAnimation)),
         ])
     ]
 })
@@ -59,9 +59,9 @@ import { menuStyle as _style } from "./style";
 export class TvMenuItemComponent extends GridItem implements Selectable {
     
     
-    @Input() color = _style.item.defaultColor;
+    @Input() color = menuStyle.item.defaultColor;
     @Input() icon = null;
-    @Input() highlight = _style.item.defaultHightlight;
+    @Input() highlight = menuStyle.item.defaultHightlight;
 
     @Output() onSelect = new EventEmitter<void>();
 
