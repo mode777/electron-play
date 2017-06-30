@@ -5,6 +5,7 @@ import 'rxjs/add/operator/throttle';
 import 'rxjs/add/observable/interval';
 import { PlatformSource, PlatformModel } from "../db.retro-play";
 import { TvScreenService, TvMenuComponent } from "../tv-components";
+import { Table, FieldTypes, Constraints, Behaviour } from "../db/index";
 
 @Component({
     selector: 'app-root',
@@ -82,6 +83,7 @@ export class AppComponent implements AfterContentInit {
 
     constructor(public source: PlatformSource, private _service: TvScreenService){
         this.platforms = source.observe();
+        this.tableTest();
     }
 
     ngAfterContentInit(): void {
@@ -99,4 +101,8 @@ export class AppComponent implements AfterContentInit {
             this.sliderOpen = true;
         }, 200);
     }
+
+    tableTest(){
+
+     }
 }

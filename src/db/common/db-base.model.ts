@@ -49,8 +49,8 @@ export abstract class DbBaseModel<TEntity extends {}> implements DbModel {
     }
 
     public abstract getKeys(): any;
+    public abstract exists(): boolean;
     protected abstract loadFromEntity(entity: TEntity);
     protected abstract getEntity(): TEntity;
-    protected abstract exists(): boolean;
 }
 

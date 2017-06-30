@@ -20,5 +20,4 @@ export class LocationSource extends DbSource<LocationModel> {
         await model.saveAsync();
         return model;
     }
-
 }

@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { DbSource, DbConnection, DefaultSource } from "../db";
-import { PlatformModel, PlatformEntity } from "./platform.model";
+import { GenreModel, GenreEntity } from "./genre.model";
 import { RetroPlayConnection } from "./retro-play.connection";
 
 @Injectable()
-export class PlatformSource extends DefaultSource<PlatformEntity, PlatformModel> {
+export class GenreSource extends DefaultSource<GenreEntity, GenreModel> {
 
     constructor(connection: RetroPlayConnection){
-        super(connection, "platforms", (conn,ent) => new PlatformModel(conn,ent));
+        super(connection, "genres", (conn, ent) => new GenreModel(conn, ent));
     }
 
 }

@@ -1,4 +1,3 @@
-
 import { IdentityModel, DbConnection } from "../db";
 
 export interface LocationEntity {
@@ -43,5 +42,4 @@ export class LocationModel extends IdentityModel<LocationEntity> {
         this.path = entity.path;
         this._platformId = entity.platformId;
     }
-    
 }

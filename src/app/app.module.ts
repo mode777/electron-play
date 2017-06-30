@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialModule } from "../material/material.module";
 import { CommonComponentsModule } from "../common.components";
-import { RetroPlayConnection, PlatformSource } from "../db.retro-play";
+import { RetroPlayConnection, PlatformSource, RetroPlayInitializer } from "../db.retro-play";
 
 import { AppComponent } from './app.component';
 import { PlatformComponent } from "./platform/platform.component";
@@ -32,6 +32,7 @@ import { TvScreenComponent } from "../tv-components/tv-screen.component";
     ],
     providers: [
         RetroPlayConnection,
+        RetroPlayInitializer,
         PlatformSource,
         TvInputService,
         TvScreenComponent

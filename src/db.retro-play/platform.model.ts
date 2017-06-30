@@ -1,5 +1,4 @@
-
-import { IdentityModel, DbConnection } from "../db";
+import { IdentityModel, DbConnection, DefaultModel } from "../db";
 import { LocationSource } from "./location.source";
 import { RetroPlayConnection } from "./retro-play.db.module";
 
@@ -9,33 +8,12 @@ export interface PlatformEntity {
     description?: string
 }
 
-export class PlatformModel extends IdentityModel<PlatformEntity> {
-
-    public name: string;
-    public description: string;
+export class PlatformModel extends DefaultModel<PlatformEntity> {
 
     private _locations: LocationSource = null;
 
     constructor(connection: DbConnection, platform?: PlatformEntity){
         super("platforms", connection, platform);
-        if(!platform){
-            this.name = "";
-            this.description = null;
-        }
-    }
-
-    protected getEntity(): PlatformEntity {
-        console.log(this);
-        return {
-            id: this.id,
-            name: this.name,
-            description: this.description
-        }
-    }   
-
-    protected loadAdditionalValues(entity: PlatformEntity) {
-        this.name = entity.name;
-        this.description = entity.description || null;
     }
 
     public get locations(){
