@@ -28,6 +28,7 @@ export abstract class IdentityModel<TEntity extends IdentityEntity> extends DbBa
     public getKeys() {
         return { id: this._id };
     }
+    
     public exists() {
         return this._id !== 0;
     }
