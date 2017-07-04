@@ -2,6 +2,7 @@ import { IdentityModel, DbConnection, DefaultModel, ManyToManySource } from "../
 import { RetroPlayConnection } from "./retro-play.db.module";
 import { GameEntity, GameModel } from "./game.model";
 import { Observable } from "rxjs/Rx";
+import { Source } from "../common/source";
 
 export interface GenreEntity {
     id: number;
@@ -11,31 +12,20 @@ export interface GenreEntity {
 
 export class GenreModel extends DefaultModel<GenreEntity> {
 
-    private readonly _gameSource: ManyToManySource<GameEntity, GameModel, GenreModel>;
+    private readonly _gameSource: Source<GameModel>;
     
-    constructor(connection: DbConnection, genre?: GenreEntity){
-        super("genres", connection, genre);
+    constructor(connection: DbConnection, genre?: GenreEntity, exisits = false){
+        super(connection, "genres", genre, exisits);
 
-        this._gameSource = new ManyToManySource<GameEntity, GameModel, GenreModel>({
-            connection: this.connection,
-            manyFactory: (conn, ent) => new GameModel(conn, ent),
-            manyKey: "gameId",
-            oneKey: "genreId",
+        this._gameSource = new ManyToManySource<GameModel, GameEntity>({
+            connection: connection,
+            factory: (entity) => new GameModel(connection, entity, !!entity),
             manyTable: "games",
-            manyToManyTable: "gameGenres",
-            one: this 
+            manyToManyJoin: { "gameId": "id" },
+            manyToManyKeys: { "genreId": this.id },
+            manyToManyTable: "gameGenres"
         });
     }    
 
-    observeGames() {
-        return this._gameSource.observe();    
-    }
-
-    addGenreAsync(game: GameModel) {
-        return this._gameSource.addAsync(game);    
-    }
-
-    removeGenreAsync(game: GameModel) {
-        return this._gameSource.removeAsync(game);
-    }
+    get games() { return this._gameSource; }
 }

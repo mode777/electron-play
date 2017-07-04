@@ -3,6 +3,7 @@ export interface DbConnection {
     getByKeysAsync<TResult extends any>(table: string, keysObject: any): Promise<TResult>
     getByWhereAsync<TResult extends any>(table: string, whereClause: string, whereClauseArgs: any[]): Promise<TResult>
     queryByWhereAsync<TResult extends any>(table: string, whereClause: string, whereClauseArgs: any[]): Promise<TResult[]>
+    queryByKeysAsync<TResult extends any>(table: string, keysObject: any): Promise<TResult[]>
     insertAsync(table: string, valuesObject: any): Promise<void>
     updateByKeysAsync(table: string, valuesObject: any, keysObject: any): Promise<void>
     updateByWhereAsync(table: string, valuesObject: any, whereClause: string, whereClauseArgs: any[]): Promise<void>

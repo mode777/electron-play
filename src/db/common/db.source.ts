@@ -1,19 +1,20 @@
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from "rxjs/Observable";
-import { BaseSource } from "../../common";
-import { DbModel } from "./db.model";
+import { BaseSource, Model } from "../../common";
 import { DbConnection } from "./db.connection";
 
-export abstract class DbSource<T extends DbModel> extends BaseSource<T> {
+export type ModelFactory<TModel extends Model, TEntity extends {}> = (entity: TEntity) => TModel;
 
-    constructor(protected connection: DbConnection, protected readonly table: string){
-        super();
+export abstract class DbSource<TModel extends Model, TEntity extends {}> extends BaseSource<TModel, TEntity> {
+
+    constructor(
+        protected readonly connection: DbConnection, 
+        protected readonly factory: ModelFactory<TModel,TEntity>){
+            super();
     }
 
-    protected deleteItemAsync(item: T): Promise<void> {
-        return this.connection.deleteByKeysAsync(this.table, item.getKeys());
+    protected modelFromEntity(entity?: TEntity): TModel {
+        return this.factory(entity);
     }
-
-    protected abstract loadDataAsync(): Promise<T[]>;
-    protected abstract createModelAsync(): Promise<T>;
+    protected abstract loadEntitiesAsync(): Promise<TEntity[]>;
 }

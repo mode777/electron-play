@@ -13,31 +13,21 @@ export interface GameEntity {
 
 export class GameModel extends DefaultModel<GameEntity> {
 
-    private readonly _genreSource: ManyToManySource<GenreEntity, GenreModel, GameModel>;
+    private readonly _genreSource: ManyToManySource<GenreModel, GenreEntity>;
 
-    constructor(connection: DbConnection, game?: GameEntity){
-        super("games", connection, game);
+    constructor(connection: DbConnection, game?: GameEntity, exists = false){
+        super(connection, "games", game, exists);
 
-        this._genreSource = new ManyToManySource<GenreEntity, GenreModel, GameModel>({
-            connection: this.connection,
-            manyFactory: (conn, ent) => new GenreModel(conn, ent),
-            manyKey: "genreId",
-            oneKey: "gameId",
+        this._genreSource = new ManyToManySource<GenreModel, GenreEntity>({
+            connection: connection,
+            factory: (entity) => new GenreModel(connection, entity, !!entity),
             manyTable: "genres",
-            manyToManyTable: "gameGenres",
-            one: this 
+            manyToManyJoin: { "genreId": "id" },
+            manyToManyKeys: { "gameId": this.id },
+            manyToManyTable: "gameGenres"
         });
     }    
 
-    observeGenres() {
-        return this._genreSource.observe();    
-    }
+    get genres() { return this._genreSource; }
 
-    addGenreAsync(genre: GenreModel) {
-        return this._genreSource.addAsync(genre);    
-    }
-
-    removeGenreAsync(genre: GenreModel) {
-        return this._genreSource.removeAsync(genre);
-    }
 }

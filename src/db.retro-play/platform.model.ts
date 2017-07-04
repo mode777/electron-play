@@ -1,6 +1,8 @@
 import { IdentityModel, DbConnection, DefaultModel } from "../db";
-import { LocationSource } from "./location.source";
 import { RetroPlayConnection } from "./retro-play.db.module";
+import { Source } from "../common/source";
+import { LocationModel, LocationEntity } from "./location.model";
+import { OneToManySource } from "../db/common/one-to-many.source";
 
 export interface PlatformEntity {
     id: number;
@@ -10,20 +12,18 @@ export interface PlatformEntity {
 
 export class PlatformModel extends DefaultModel<PlatformEntity> {
 
-    private _locations: LocationSource = null;
+    private _locations: Source<LocationModel>;
 
-    constructor(connection: DbConnection, platform?: PlatformEntity){
-        super("platforms", connection, platform);
+    constructor(connection: DbConnection, platform?: PlatformEntity, exists = false){
+        super(connection, "platforms", platform, exists);
+
+        this._locations = new OneToManySource<LocationModel, LocationEntity>({
+            connection: connection,
+            factory: (entity) => new LocationModel(connection, entity, !!entity),
+            manyTable: "locations",
+            manyKeys: { "platformId": this.id },
+        });
     }
 
-    public get locations(){
-        if(!this.exists())
-            throw new Error("Cannot access locations for non-exisiting platform");
-        
-        if(!this._locations)
-            this._locations = new LocationSource(<RetroPlayConnection>this.connection, this.id);
-
-        return this._locations;
-    }
-    
+    get locations() { return this._locations; }   
 }

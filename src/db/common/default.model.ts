@@ -1,35 +1,22 @@
 import { DbConnection } from "./db.connection";
-import { IdentityModel, IdentityEntity } from "./identity.model";
+import { IdentityModel } from "./identity.model";
 
-export interface DefaultEntity extends IdentityEntity {
+export class DefaultModel<TEntity extends { id: number, name: string, description?: string }> extends IdentityModel<TEntity> {
+
     name: string;
-    description?: string
-}
+    description: string;
 
-export class DefaultModel<T extends DefaultEntity> extends IdentityModel<T> {
-
-    public name: string;
-    public description: string;
-
-    constructor(table: string, connection: DbConnection, entity?: T){
-        super(table, connection, entity);
-        if(!entity){
-            this.name = "";
-            this.description = null;
-        }
+    protected loadFromEntity(entity: TEntity) {
+        throw new Error("Method not implemented.");
     }
-
-    protected getEntity(): T {
-        return <T>{
-            id: this.id,
+    protected loadDefaults() {
+        this.name = "";
+        this.description = null;
+    }
+    protected toEntity(): TEntity {
+        return <TEntity>{
             name: this.name,
             description: this.description
-        }
-    }   
-
-    protected loadAdditionalValues(entity: T) {
-        this.name = entity.name;
-        this.description = entity.description || null;
+        };
     }
-    
 }

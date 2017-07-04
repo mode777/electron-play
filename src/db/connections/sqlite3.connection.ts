@@ -50,6 +50,10 @@ export class Sqlite3Connection implements DbConnection {
         return this.getByWhereAsync<TResult>(table, whereClause, whereValues);
     }
 
+    public queryByKeysAsync<TResult extends any>(table: string, keysObject: any){
+        return <Promise<TResult[]>><any>this.getByKeysAsync<TResult>(table, keysObject);
+    }
+
     public async getByWhereAsync<TResult extends any>(table: string, whereClause: string, whereClauseArgs = []){
         await this._initialized;
 

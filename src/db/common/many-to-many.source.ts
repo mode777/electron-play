@@ -1,103 +1,62 @@
-import { ReplaySubject, Observable } from "rxjs/Rx";
-
-import { Source, Model } from "../../common";
+import { Source, Model, KeyObject } from "../../common";
 import { IdentityModel } from "./identity.model";
 import { DbConnection } from "./db.connection";
+import { DbSource, ModelFactory } from "./db.source";
 
-export interface ManyToManyOptions<TManyEntity, TMany extends IdentityModel<{id: number}>, TOne extends IdentityModel<{id: number}>> {
-    connection: DbConnection,
-    one: TOne,
-    manyToManyTable: string,
+export type JoinObject = {[key: string]: string};
+
+export interface ManyToManyOptions<TModel extends Model, TEntity extends {}> {
     manyTable: string,
-    manyKey: string,
-    oneKey: string,
-    manyFactory: (conn: DbConnection, ent: TManyEntity) => TMany;
+    manyToManyTable: string;
+    manyToManyJoin: JoinObject;
+    manyToManyKeys: KeyObject,
+    factory: ModelFactory<TModel,TEntity>;
+    connection: DbConnection;
+    manyToManyColumns?: string[],
 }
 
-export class ManyToManySource<TManyEntity, TMany extends IdentityModel<{id: number}>, TOne extends IdentityModel<{id: number}>> implements Source<TMany> {
-    private readonly _subject = new ReplaySubject<TMany[]>(1);
-    private readonly _connection: DbConnection
-    private readonly _one: TOne;
-    private readonly _tableMToN: string;
+export class ManyToManySource<TModel extends Model, TEntity extends {}> extends DbSource<TModel, TEntity> {
+    private readonly _manyToManyTable: string;
     private readonly _tableMany: string;
-    private readonly _keyMany: string;
-    private readonly _keyOne: string;
-    private readonly _factory: (conn: DbConnection, entity?: TManyEntity) => TMany;
-
-    private _data: TMany[] = [];    
-    private _initialized = false;    
+    private readonly _manyToManyJoin: JoinObject;
+    private readonly _manyToManyKeys: KeyObject; 
+    private readonly _manyToManyColumns: string[]; 
     
-    constructor(options: ManyToManyOptions<TManyEntity, TMany, TOne>){
-        this._connection = options.connection;
-        this._one = options.one;
-        this._tableMToN = options.manyToManyTable;
+    constructor(options: ManyToManyOptions<TModel, TEntity>){
+        super(options.connection, options.factory);
+        this._manyToManyTable = options.manyToManyTable;
+        this._manyToManyKeys = options.manyToManyKeys;
+        this._manyToManyJoin = options.manyToManyJoin;
         this._tableMany = options.manyTable;
-        this._keyMany = options.manyKey;
-        this._keyOne = options.oneKey;
-        this._factory = options.manyFactory;
+        this._manyToManyColumns = options.manyToManyColumns || [];
     }
     
-    async addAsync(model?: TMany): Promise<void> {
-        model = model || this._factory(this._connection);
+    protected loadEntitiesAsync(): Promise<TEntity[]> {
+        const selectClause = ["many.*"]
+            .concat(this._manyToManyColumns.map(x => `md.${x} as ${x}`))
+            .join(", ");
 
-        if(await this.containsAsync(model))
-            return;
-        
-        this._connection.runTransactionAsync(async () => {
-            if(!model.exists){
-                await model.saveAsync();
-            }
+        const joinObject = this._manyToManyJoin;
+        const joinColumns = Object.keys(joinObject);
+        const joinClause = joinColumns.map(x => `mn.${x} = many.${joinObject[x]}`).join(" AND ");
 
-            this._connection.insertAsync(this._tableMToN, this.getManyToManyEntity(model.id, this._one.id));
-        });
+        const whereObject = this._manyToManyKeys;
+        const whereColumns = Object.keys(whereObject);
+        const whereClause = whereColumns.map(x => `mn.${x} = ?`).join(" AND ");
+        // where args
+        const sqlArgs = whereColumns.map(x => joinObject[x]);
 
-        this._data.push(model);
-        this._subject.next(this._data);
+        return this.connection.queryAsync<any>(`
+            select ${selectClause} from ${this._manyToManyTable} mn
+            join ${this._tableMany} many on ${joinClause}
+            where ${whereClause}
+        `, ...sqlArgs);
     }
 
-    async removeAsync(model: TMany): Promise<void> {
-        if(!await this.containsAsync(model))
-            return;
-
-        await this._connection.deleteByKeysAsync(this._tableMToN, this.getManyToManyEntity(model.id, this._one.id));
-
-        const idx = this._data.indexOf(model);
-        this._data.splice(idx, 1);
-        this._subject.next(this._data);
+    public async addAsync(model?: TModel){
+        model = model || this.modelFromEntity();
+        await super.addAsync(model);
+        // TODO...
     }
     
-    async syncAsync(): Promise<void> {
-        const entities = await this._connection.queryAsync<any>(`
-            select many.* from ${this._tableMToN} mn
-            join ${this._tableMany} many on mn.${this._keyMany} == many.id
-            where mn.${this._keyOne} = ?
-        `, this._one.id);
-        
-        this._data = entities.map(x => this._factory(this._connection, x));      
-        this._subject.next(this._data);
-    }
-
-    observe(): Observable<TMany[]> {
-        if(!this._initialized){
-            this.syncAsync();
-            this._initialized = true;
-        }
-        return this._subject;
-    }
-
-    async containsAsync(item: TMany){
-        const many = await this._subject.toPromise();
-        
-        if(many.findIndex(x => x.id === item.id) !== -1)
-            return true;
-
-        return false;
-    }
-
-    protected getManyToManyEntity(manyKey: number, oneKey: number){
-        const entity = {}
-        entity[this._keyMany] = manyKey;
-        entity[this._keyOne] = oneKey;
-        return entity;
-    }
 }
