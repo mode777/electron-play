@@ -1,4 +1,5 @@
 import { IdentityModel, DbConnection } from "../db";
+import { PlatformModel } from "./platform.model";
 
 export interface LocationEntity {
     id: number;
@@ -16,8 +17,9 @@ export class LocationModel extends IdentityModel<LocationEntity> {
     
     private _platformId: number;
 
-    constructor(connection: DbConnection, location?: LocationEntity, exists = false){
+    constructor(connection: DbConnection, platform: PlatformModel, location?: LocationEntity, exists = false){
         super(connection, "locations", location, exists);
+        this.entity.platformId = platform.id;
     }
 
     protected loadFromEntity(entity: LocationEntity) {

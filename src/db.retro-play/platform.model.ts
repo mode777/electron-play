@@ -19,7 +19,7 @@ export class PlatformModel extends DefaultModel<PlatformEntity> {
 
         this._locations = new OneToManySource<LocationModel, LocationEntity>({
             connection: connection,
-            factory: (entity) => new LocationModel(connection, entity, !!entity),
+            factory: (entity) => new LocationModel(connection, this, entity, !!entity),
             manyTable: "locations",
             manyKeys: { "platformId": this.id },
         });

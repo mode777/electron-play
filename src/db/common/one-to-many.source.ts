@@ -25,7 +25,6 @@ export class OneToManySource<TModel extends Model, TEntity extends {}> extends D
     
     protected loadEntitiesAsync(): Promise<TEntity[]> {
         return this.connection.queryByKeysAsync(this._manyTable, this._manyKeys);
-    }
-    
+    }    
     
 }
