@@ -56,7 +56,23 @@ export class ManyToManySource<TModel extends Model, TEntity extends {}> extends 
     public async addAsync(model?: TModel){
         model = model || this.modelFromEntity();
         await super.addAsync(model);
-        // TODO...
+        const entity = this.getManyToManyEntity(model);
+        await this.connection.insertAsync(this._manyToManyTable, entity);
     }
+
+    protected getManyToManyEntity(model: TModel){
+        const modelKeys = model.getKeys();
+
+        const mToMEntity = {};
+        const keysMToM = this._manyToManyKeys;
+        const joinMToM = this._manyToManyJoin;
+
+        Object.keys(keysMToM).forEach(x => mToMEntity[x] = keysMToM[x]);
+        Object.keys(joinMToM).forEach(x => mToMEntity[x] = modelKeys[joinMToM[x]]);
+        
+        return mToMEntity;
+    }
+
+    
     
 }

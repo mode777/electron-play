@@ -16,17 +16,25 @@ export class LocationModel extends IdentityModel<LocationEntity> {
     
     private _platformId: number;
 
-    constructor(connection: DbConnection, platformId: number, location?: LocationEntity){
-        super("locations", connection, location);
-        if(!location){
-            this.isFolder = null;
-            this.extensions = [];
-            this.path = null;
-            this._platformId = platformId;
-        }
+    constructor(connection: DbConnection, location?: LocationEntity, exists = false){
+        super(connection, "locations", location, exists);
     }
 
-    protected getEntity(): LocationEntity {
+    protected loadFromEntity(entity: LocationEntity) {
+        this.isFolder = entity.isFolder > 0 ? true : false;
+        this.extensions = JSON.parse(entity.extensions || "[]");
+        this.path = entity.path;
+        this._platformId = entity.platformId;
+    }
+    
+    protected loadDefaults() {
+        this.isFolder = null;
+        this.extensions = [];
+        this.path = null;
+        this._platformId = 0;
+    }
+    
+    protected toEntity(): LocationEntity {
         return {
             id: this.id,
             extensions: JSON.stringify(this.extensions),
@@ -34,12 +42,5 @@ export class LocationModel extends IdentityModel<LocationEntity> {
             path: this.path,
             platformId: this._platformId
         }
-    }   
-
-    protected loadAdditionalValues(entity: LocationEntity) {
-        this.isFolder = entity.isFolder !== null ? entity.isFolder !== 0 : false;
-        this.extensions = JSON.parse(entity.extensions || "[]");
-        this.path = entity.path;
-        this._platformId = entity.platformId;
     }
 }
