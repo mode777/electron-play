@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 
 import { TvInputService } from "../tv";
-import { MaterialModule } from "../material/material.module";
-
 import { TvScreenService } from "./tv-screen.service";
 
 import { TvInputComponent } from "./tv-input.component";
@@ -23,37 +21,36 @@ import { TvSwitchComponent } from "./tv-switch-component";
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
     ],
     exports: [
         TvInputComponent,
-        TvRowComponent,
-        TvRowItemComponent,
-        TvLaneComponent,
+        // TvRowComponent,
+        // TvRowItemComponent,
+        // TvLaneComponent,
         TvScreenComponent,
-        TvSliderComponent,
-        TvSliderTitleComponent,
-        TvMenuHeadingComponent,
-        TvMenuComponent,
-        TvMenuItemComponent,
-        TvScrollViewComponent,
-        TvMenuSwitchComponent,
-        TvSwitchComponent
+        // TvSliderComponent,
+        // TvSliderTitleComponent,
+        // TvMenuHeadingComponent,
+        // TvMenuComponent,
+        // TvMenuItemComponent,
+        // TvScrollViewComponent,
+        // TvMenuSwitchComponent,
+        // TvSwitchComponent
     ],
     declarations: [
         TvInputComponent,
-        TvRowComponent,
-        TvRowItemComponent,
-        TvLaneComponent,
+        // TvRowComponent,
+        // TvRowItemComponent,
+        // TvLaneComponent,
         TvScreenComponent,
-        TvSliderComponent,
-        TvSliderTitleComponent,
-        TvMenuHeadingComponent,
-        TvMenuComponent,
-        TvMenuItemComponent,
-        TvScrollViewComponent,
-        TvMenuSwitchComponent,
-        TvSwitchComponent
+        // TvSliderComponent,
+        // TvSliderTitleComponent,
+        // TvMenuHeadingComponent,
+        // TvMenuComponent,
+        // TvMenuItemComponent,
+        // TvScrollViewComponent,
+        // TvMenuSwitchComponent,
+        // TvSwitchComponent
     ],
     providers: [
         TvInputService,

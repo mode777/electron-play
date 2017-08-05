@@ -1,14 +1,13 @@
 {
   "name": "electron-play",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A game browser/launcher",
-  "main": "bin/main.js",
+  "main": "src/main.ts",
   "scripts": {
     "start": "npm run build && npm run start-electron",
-    "start-electron": "node_modules/.bin/electron.cmd js/main.js",
+    "start-electron": "node_modules/.bin/electron.cmd main.js",
     "build": "node_modules/.bin/tsc.cmd",
-    "watch": "node_modules/.bin/tsc.cmd -w",
-    "postinstall": "install-app-deps"
+    "watch": "node_modules/.bin/tsc.cmd -w"
   },
   "repository": "https://github.com/mode777/electron-play.git",
   "keywords": [
@@ -18,26 +17,26 @@
   "author": "Alexander Klingenbeck",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^7.0.13",
+    "@types/node": "^8.0.14",
     "@types/sqlite3": "^3.1.0",
-    "electron-builder": "^18.6.2",
-    "typescript": "^2.3.4"
+    "ts-loader": "^2.3.1",
+    "tslib": "^1.7.1",
+    "typescript": "^2.4.2"
   },
   "dependencies": {
-    "@angular/animations": "^4.0.2",
-    "@angular/common": "^4.0.0",
-    "@angular/compiler": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0",
-    "@angular/http": "^4.0.0",
-    "@angular/material": "^2.0.0-beta.6",
-    "@angular/platform-browser": "^4.0.0",
-    "@angular/platform-browser-dynamic": "^4.0.0",
-    "@angular/router": "^4.0.0",
+    "@angular/animations": "^4.3.1",
+    "@angular/common": "^4.3.1",
+    "@angular/compiler": "^4.3.1",
+    "@angular/core": "^4.3.1",
+    "@angular/forms": "^4.3.1",
+    "@angular/http": "^4.3.1",
+    "@angular/platform-browser": "^4.3.1",
+    "@angular/platform-browser-dynamic": "^4.3.1",
+    "@angular/router": "^4.3.1",
     "core-js": "^2.4.1",
     "electron": "^1.6.11",
-    "rxjs": "^5.1.0",
+    "rxjs": "^5.4.2",
     "sqlite3": "^3.1.8",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.14"
   }
 }

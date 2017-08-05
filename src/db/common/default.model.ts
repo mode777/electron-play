@@ -7,7 +7,8 @@ export class DefaultModel<TEntity extends { id: number, name: string, descriptio
     description: string;
 
     protected loadFromEntity(entity: TEntity) {
-        throw new Error("Method not implemented.");
+        this.name = entity.name,
+        this.description = entity.description;
     }
     protected loadDefaults() {
         this.name = "";

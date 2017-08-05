@@ -3,18 +3,12 @@
     "target": "es6",
     "outDir": "js",
     "module": "commonjs",
-    "declaration": true,
-    "noImplicitAny": false,
-    "noEmitOnError": false,
-    "moduleResolution": "node",
     "inlineSourceMap": true,
     "inlineSources": true,
+    "noImplicitAny": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "newLine": "LF",
-    "typeRoots": [
-      "./node_modules/@types",
-      "./typings"
-    ]
+    "importHelpers": true
   }
 }

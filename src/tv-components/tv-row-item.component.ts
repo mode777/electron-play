@@ -4,9 +4,9 @@ import { NavigationComponent } from "../tv/index";
 @Component({
     selector: 'tv-row-item',
     template: `
-        <md-card class="tv-row-item" [ngClass]="{ 'selected': selected }" [style.width]="width + 'px'" [style.height]="height + 'px'">
+        <div class="tv-row-item" [ngClass]="{ 'selected': selected }" [style.width]="width + 'px'" [style.height]="height + 'px'">
             <ng-content></ng-content>
-        </md-card>
+        </div>
     `,
     styles: [`
         .tv-row-item {

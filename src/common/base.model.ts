@@ -7,11 +7,12 @@ export abstract class BaseModel<TEntity extends {}> implements Model {
     constructor(entity?: TEntity, private _exists = false){
         if(entity){
             this.loadFromEntity(entity);
+            this.entity = entity;
         }
         else {
             this.loadDefaults();
+            this.entity = this.toEntity();
         }
-        this.entity = this.toEntity();
     }
 
     async saveAsync(): Promise<void> {
@@ -34,9 +35,11 @@ export abstract class BaseModel<TEntity extends {}> implements Model {
     }
     
     async deleteAsync(): Promise<void> {
-        await this.deleteAsync();
-        this.loadDefaults();
-        this.entity = this.toEntity();
+        if(this._exists){
+            await this.deletEntityAsync(this.entity);
+            this.loadDefaults();
+            this.entity = this.toEntity();
+        }
         this._exists = false;
     }
     
@@ -70,4 +73,5 @@ export abstract class BaseModel<TEntity extends {}> implements Model {
     protected abstract toEntity(): TEntity;
     protected abstract storeEntityAsync(entity: TEntity): Promise<void>;
     protected abstract loadEntityAsync(): Promise<TEntity>;
+    protected abstract deletEntityAsync(entity: TEntity): Promise<void>;
 }

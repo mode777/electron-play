@@ -19,16 +19,28 @@ export abstract class DbModel<TEntity extends {}> extends BaseModel<TEntity> {
 
     protected async storeEntityAsync(entity: TEntity): Promise<void> {
         if(this.exists()){
-            await this.connection.updateByKeysAsync(this.table, this.toEntity(), this.getKeys());
+            await this.updateAsync(entity);
         }
         else {
-            await this.connection.insertAsync(this.table, this.toEntity());
+            await this.createAsync(entity);
         }
+    }
+
+    protected async updateAsync(entity: TEntity): Promise<void>{
+        await this.connection.updateByKeysAsync(this.table, this.toEntity(), this.getKeys());
+    }
+
+    protected async createAsync(entity: TEntity): Promise<void>{
+        await this.connection.insertAsync(this.table, this.toEntity());
     }
 
     protected loadEntityAsync(): Promise<TEntity> {
         return this.connection.getByKeysAsync(this.table, this.getKeys());
     }    
+
+    protected deletEntityAsync(entity: TEntity): Promise<void> {
+        return this.connection.deleteByKeysAsync(this.table, this.getKeys());
+    }
 
 }
 

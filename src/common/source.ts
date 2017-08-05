@@ -5,5 +5,6 @@ export interface Source<T extends Model> {
     addAsync(item?: T): Promise<void>;
     removeAsync(item: T): Promise<void>;
     reloadAsync(): Promise<void>;
-    observe(): Observable<T[]>;
+    getObservable(): Observable<T[]>;
+    getAllAsync(): Promise<T[]>;
 }

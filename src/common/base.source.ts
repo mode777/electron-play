@@ -5,12 +5,15 @@ import { Source } from "./source";
 
 export abstract class BaseSource<TModel extends Model, TEntity extends {}> implements Source<TModel> {
 
-    private _data: TModel[];
+    private _data: TModel[] = [];
     private readonly _subject = new ReplaySubject<TModel[]>(1);
     private _initialized = false;
 
     async addAsync(item?: TModel): Promise<void> {
         const model = item || (await this.modelFromEntity());  
+        if(!item.exists()){
+            await item.saveAsync();
+        }
         this._data.push(model);
         this._subject.next(this._data); 
     }
@@ -33,12 +36,17 @@ export abstract class BaseSource<TModel extends Model, TEntity extends {}> imple
         this._subject.next(this._data);
     }
     
-    observe(): Observable<TModel[]> {
+    getObservable(): Observable<TModel[]> {
         if(!this._initialized){
             this.reloadAsync();
             this._initialized = true;
         }
-        return this._subject;
+        return <Observable<TModel[]>>this._subject;
+    }
+
+    async getAllAsync(): Promise<TModel[]> {
+        await this.reloadAsync();
+        return this._data.slice(0);
     }
 
     protected abstract modelFromEntity(entity?: TEntity): TModel;

@@ -11,7 +11,7 @@ import { menuStyle } from "./style";
     template: `
         <div class="slider-item" [style.color]="color" >
             <div [@state]="_state" class="bg" [style.background-color]="highlight"></div>
-            <md-icon *ngIf="!!icon" class="icon">{{icon}}</md-icon>
+            <!--<md-icon *ngIf="!!icon" class="icon">{{icon}}</md-icon>-->
             <ng-content></ng-content>
         </div>
     `,

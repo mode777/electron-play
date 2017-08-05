@@ -13,9 +13,9 @@ export abstract class IdentityModel<TEntity extends {id: number}> extends DbMode
         return { id: this.entity.id };
     }
     
-    protected async storeEntity(entity: TEntity){
+    protected async createAsync(entity: TEntity){
         await this.connection.runTransactionAsync(async () => {
-            await super.storeEntityAsync(entity);
+            await super.createAsync(entity);
             this.entity.id = await this.connection.getLastIdAsync();
         });
     }

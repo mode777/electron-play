@@ -1,6 +1,7 @@
-import { EventEmitter, HostListener } from "@angular/core";
+import { EventEmitter, HostListener, Injectable } from "@angular/core";
 import { InputService } from "./input.service";
 
+@Injectable()
 export class TvInputService implements InputService {
 
     readonly up = new EventEmitter<void>();
